@@ -158,7 +158,7 @@ type decoded struct {
 
 func decode(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 31) & 0x1
-	op1 := (ins >> 28) & 0xf
+	op1 := (ins >> 25) & 0xf
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0:
@@ -188,8 +188,8 @@ func decode(ins uint32, d *decoded) (err error) {
 }
 
 func decode_reserved(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 30) & 0x3
-	op1 := (ins >> 24) & 0x1ff
+	op0 := (ins >> 29) & 0x3
+	op1 := (ins >> 16) & 0x1ff
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0:
@@ -206,17 +206,17 @@ func decode_reserved(ins uint32, d *decoded) (err error) {
 
 func decode_reserved_perm_undef(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_perm_undef
-	d.imm16 = (ins >> 15) & 0xffff
+	d.imm16 = (ins >> 0) & 0xffff
 	d.encoding = encoding_UDF_only_perm_undef
 	return
 }
 
 func decode_sme(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 30) & 0x3
-	op1 := (ins >> 24) & 0x3f
+	op0 := (ins >> 29) & 0x3
+	op1 := (ins >> 19) & 0x3f
 	op2 := (ins >> 17) & 0x1
 	op3 := (ins >> 9) & 0x1
-	op4 := (ins >> 4) & 0x7
+	op4 := (ins >> 2) & 0x7
 
 	switch {
 	case (op0&0x2) == 0x0 && (op1&0x10) == 0x0:
@@ -288,12 +288,12 @@ func decode_sme_mortlach_32bit_prod(ins uint32, d *decoded) (err error) {
 
 func decode_sme_mortlach_32bit_prod_mortlach_f32f32_prod(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_f32f32_prod
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.S = (ins >> 4) & 0x1
-	d.ZAda = (ins >> 1) & 0x3
+	d.ZAda = (ins >> 0) & 0x3
 
 	switch {
 	case d.S == 0x0:
@@ -308,12 +308,12 @@ func decode_sme_mortlach_32bit_prod_mortlach_f32f32_prod(ins uint32, d *decoded)
 
 func decode_sme_mortlach_32bit_prod_mortlach_b16f32_prod(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_b16f32_prod
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.S = (ins >> 4) & 0x1
-	d.ZAda = (ins >> 1) & 0x3
+	d.ZAda = (ins >> 0) & 0x3
 
 	switch {
 	case d.S == 0x0:
@@ -328,12 +328,12 @@ func decode_sme_mortlach_32bit_prod_mortlach_b16f32_prod(ins uint32, d *decoded)
 
 func decode_sme_mortlach_32bit_prod_mortlach_f16f32_prod(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_f16f32_prod
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.S = (ins >> 4) & 0x1
-	d.ZAda = (ins >> 1) & 0x3
+	d.ZAda = (ins >> 0) & 0x3
 
 	switch {
 	case d.S == 0x0:
@@ -350,12 +350,12 @@ func decode_sme_mortlach_32bit_prod_mortlach_i8i32_prod(ins uint32, d *decoded) 
 	d.iclass = iclass_mortlach_i8i32_prod
 	d.u0 = (ins >> 24) & 0x1
 	d.u1 = (ins >> 21) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.S = (ins >> 4) & 0x1
-	d.ZAda = (ins >> 1) & 0x3
+	d.ZAda = (ins >> 0) & 0x3
 
 	switch {
 	case d.u0 == 0x0 && d.u1 == 0x0 && d.S == 0x0:
@@ -402,12 +402,12 @@ func decode_sme_mortlach_64bit_prod(ins uint32, d *decoded) (err error) {
 
 func decode_sme_mortlach_64bit_prod_mortlach_f64f64_prod(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_f64f64_prod
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.S = (ins >> 4) & 0x1
-	d.ZAda = (ins >> 2) & 0x7
+	d.ZAda = (ins >> 0) & 0x7
 
 	switch {
 	case d.S == 0x0:
@@ -424,12 +424,12 @@ func decode_sme_mortlach_64bit_prod_mortlach_i16i64_prod(ins uint32, d *decoded)
 	d.iclass = iclass_mortlach_i16i64_prod
 	d.u0 = (ins >> 24) & 0x1
 	d.u1 = (ins >> 21) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.S = (ins >> 4) & 0x1
-	d.ZAda = (ins >> 2) & 0x7
+	d.ZAda = (ins >> 0) & 0x7
 
 	switch {
 	case d.u0 == 0x0 && d.u1 == 0x0 && d.S == 0x0:
@@ -470,13 +470,13 @@ func decode_sme_mortlach_ins(ins uint32, d *decoded) (err error) {
 
 func decode_sme_mortlach_ins_mortlach_insert_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_insert_pred
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.Q = (ins >> 16) & 0x1
 	d.V = (ins >> 15) & 0x1
-	d.Rs = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.opc = (ins >> 3) & 0xf
+	d.Rs = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.opc = (ins >> 0) & 0xf
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.Q == 0x1:
@@ -515,13 +515,13 @@ func decode_sme_mortlach_ext(ins uint32, d *decoded) (err error) {
 
 func decode_sme_mortlach_ext_mortlach_extract_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_extract_pred
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.Q = (ins >> 16) & 0x1
 	d.V = (ins >> 15) & 0x1
-	d.Rs = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.opc = (ins >> 8) & 0xf
-	d.Zd = (ins >> 4) & 0x1f
+	d.Rs = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.opc = (ins >> 5) & 0xf
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.Q == 0x1:
@@ -545,8 +545,8 @@ func decode_sme_mortlach_ext_mortlach_extract_pred(ins uint32, d *decoded) (err 
 }
 
 func decode_sme_mortlach_misc(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 23) & 0x3
-	op1 := (ins >> 18) & 0x7ff
+	op0 := (ins >> 22) & 0x3
+	op1 := (ins >> 8) & 0x7ff
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0:
@@ -563,14 +563,14 @@ func decode_sme_mortlach_misc(ins uint32, d *decoded) (err error) {
 
 func decode_sme_mortlach_misc_mortlach_zero(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_zero
-	d.imm8 = (ins >> 7) & 0xff
+	d.imm8 = (ins >> 0) & 0xff
 	d.encoding = encoding_zero_za_i_
 	return
 }
 
 func decode_sme_mortlach_hvadd(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 23) & 0x1
-	op1 := (ins >> 18) & 0x3
+	op1 := (ins >> 17) & 0x3
 	op2 := (ins >> 4) & 0x1
 
 	switch {
@@ -592,10 +592,10 @@ func decode_sme_mortlach_hvadd_mortlach_addhv(ins uint32, d *decoded) (err error
 	d.iclass = iclass_mortlach_addhv
 	d.op = (ins >> 22) & 0x1
 	d.V = (ins >> 16) & 0x1
-	d.Pm = (ins >> 15) & 0x7
-	d.Pn = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.opc2 = (ins >> 2) & 0x7
+	d.Pm = (ins >> 13) & 0x7
+	d.Pn = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.opc2 = (ins >> 0) & 0x7
 
 	switch {
 	case d.op == 0x0 && (d.opc2&0x4) == 0x4:
@@ -615,9 +615,9 @@ func decode_sme_mortlach_hvadd_mortlach_addhv(ins uint32, d *decoded) (err error
 }
 
 func decode_sme_mortlach_mem(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 24) & 0xf
-	op1 := (ins >> 20) & 0x3f
-	op2 := (ins >> 12) & 0x7
+	op0 := (ins >> 21) & 0xf
+	op1 := (ins >> 15) & 0x3f
+	op2 := (ins >> 10) & 0x7
 	op3 := (ins >> 4) & 0x1
 
 	switch {
@@ -653,13 +653,13 @@ func decode_sme_mortlach_mem(ins uint32, d *decoded) (err error) {
 
 func decode_sme_mortlach_mem_mortlach_contig_load(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_contig_load
-	d.msz = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
 	d.V = (ins >> 15) & 0x1
-	d.Rs = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.opc = (ins >> 3) & 0xf
+	d.Rs = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.opc = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -678,13 +678,13 @@ func decode_sme_mortlach_mem_mortlach_contig_load(ins uint32, d *decoded) (err e
 
 func decode_sme_mortlach_mem_mortlach_contig_store(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_contig_store
-	d.msz = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
 	d.V = (ins >> 15) & 0x1
-	d.Rs = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.opc = (ins >> 3) & 0xf
+	d.Rs = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.opc = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -704,9 +704,9 @@ func decode_sme_mortlach_mem_mortlach_contig_store(ins uint32, d *decoded) (err 
 func decode_sme_mortlach_mem_mortlach_ctxt_ldst(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_ctxt_ldst
 	d.op = (ins >> 21) & 0x1
-	d.Rv = (ins >> 14) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.imm4 = (ins >> 3) & 0xf
+	d.Rv = (ins >> 13) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.imm4 = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0:
@@ -721,33 +721,33 @@ func decode_sme_mortlach_mem_mortlach_ctxt_ldst(ins uint32, d *decoded) (err err
 
 func decode_sme_mortlach_mem_mortlach_contig_qload(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_contig_qload
-	d.Rm = (ins >> 20) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
 	d.V = (ins >> 15) & 0x1
-	d.Rs = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.ZAt = (ins >> 3) & 0xf
+	d.Rs = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.ZAt = (ins >> 0) & 0xf
 	d.encoding = encoding_ld1q_za_p_rrr_
 	return
 }
 
 func decode_sme_mortlach_mem_mortlach_contig_qstore(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_mortlach_contig_qstore
-	d.Rm = (ins >> 20) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
 	d.V = (ins >> 15) & 0x1
-	d.Rs = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.ZAt = (ins >> 3) & 0xf
+	d.Rs = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.ZAt = (ins >> 0) & 0xf
 	d.encoding = encoding_st1q_za_p_rrr_
 	return
 }
 
 func decode_sve(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 31) & 0x7
-	op1 := (ins >> 24) & 0x3
-	op2 := (ins >> 21) & 0x1f
-	op3 := (ins >> 15) & 0x3f
+	op0 := (ins >> 29) & 0x7
+	op1 := (ins >> 23) & 0x3
+	op2 := (ins >> 17) & 0x1f
+	op3 := (ins >> 10) & 0x3f
 	op4 := (ins >> 4) & 0x1
 
 	switch {
@@ -983,12 +983,12 @@ func decode_sve_sve_int_muladd_pred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_muladd_pred_sve_int_mlas_vvv_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_mlas_vvv_pred
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -1003,12 +1003,12 @@ func decode_sve_sve_int_muladd_pred_sve_int_mlas_vvv_pred(ins uint32, d *decoded
 
 func decode_sve_sve_int_muladd_pred_sve_int_mladdsub_vvv_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_mladdsub_vvv_pred
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Za = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Za = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -1022,7 +1022,7 @@ func decode_sve_sve_int_muladd_pred_sve_int_mladdsub_vvv_pred(ins uint32, d *dec
 }
 
 func decode_sve_sve_int_pred_bin(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x7
+	op0 := (ins >> 18) & 0x7
 
 	switch {
 	case (op0 & 0x6) == 0x0:
@@ -1043,11 +1043,11 @@ func decode_sve_sve_int_pred_bin(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_pred_bin_sve_int_bin_pred_arit_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_arit_0
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1068,12 +1068,12 @@ func decode_sve_sve_int_pred_bin_sve_int_bin_pred_arit_0(ins uint32, d *decoded)
 
 func decode_sve_sve_int_pred_bin_sve_int_bin_pred_arit_1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_arit_1
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x3
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 17) & 0x3
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.U == 0x0:
@@ -1098,12 +1098,12 @@ func decode_sve_sve_int_pred_bin_sve_int_bin_pred_arit_1(ins uint32, d *decoded)
 
 func decode_sve_sve_int_pred_bin_sve_int_bin_pred_arit_2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_arit_2
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.H = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.H == 0x0 && d.U == 0x0:
@@ -1122,12 +1122,12 @@ func decode_sve_sve_int_pred_bin_sve_int_bin_pred_arit_2(ins uint32, d *decoded)
 
 func decode_sve_sve_int_pred_bin_sve_int_bin_pred_div(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_div
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.R = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.R == 0x0 && d.U == 0x0:
@@ -1146,11 +1146,11 @@ func decode_sve_sve_int_pred_bin_sve_int_bin_pred_div(ins uint32, d *decoded) (e
 
 func decode_sve_sve_int_pred_bin_sve_int_bin_pred_log(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_log
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1170,7 +1170,7 @@ func decode_sve_sve_int_pred_bin_sve_int_bin_pred_log(ins uint32, d *decoded) (e
 }
 
 func decode_sve_sve_int_pred_red(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x7
+	op0 := (ins >> 18) & 0x7
 
 	switch {
 	case op0 == 0x0:
@@ -1193,12 +1193,12 @@ func decode_sve_sve_int_pred_red(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_pred_red_sve_int_reduce_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_reduce_0
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Vd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Vd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.U == 0x0:
@@ -1215,12 +1215,12 @@ func decode_sve_sve_int_pred_red_sve_int_reduce_0(ins uint32, d *decoded) (err e
 
 func decode_sve_sve_int_pred_red_sve_int_reduce_1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_reduce_1
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Vd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Vd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.U == 0x0:
@@ -1239,12 +1239,12 @@ func decode_sve_sve_int_pred_red_sve_int_reduce_1(ins uint32, d *decoded) (err e
 
 func decode_sve_sve_int_pred_red_sve_int_movprfx_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_movprfx_pred
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x3
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 17) & 0x3
 	d.M = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1261,11 +1261,11 @@ func decode_sve_sve_int_pred_red_sve_int_movprfx_pred(ins uint32, d *decoded) (e
 
 func decode_sve_sve_int_pred_red_sve_int_reduce_2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_reduce_2
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Vd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Vd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1283,7 +1283,7 @@ func decode_sve_sve_int_pred_red_sve_int_reduce_2(ins uint32, d *decoded) (err e
 }
 
 func decode_sve_sve_int_pred_shift(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x3
+	op0 := (ins >> 19) & 0x3
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -1300,14 +1300,14 @@ func decode_sve_sve_int_pred_shift(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_pred_shift_sve_int_bin_pred_shift_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_shift_0
-	d.tszh = (ins >> 23) & 0x3
-	d.opc = (ins >> 19) & 0x3
+	d.tszh = (ins >> 22) & 0x3
+	d.opc = (ins >> 18) & 0x3
 	d.L = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.tszl = (ins >> 9) & 0x3
-	d.imm3 = (ins >> 7) & 0x7
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.tszl = (ins >> 8) & 0x3
+	d.imm3 = (ins >> 5) & 0x7
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.L == 0x0 && d.U == 0x0:
@@ -1344,13 +1344,13 @@ func decode_sve_sve_int_pred_shift_sve_int_bin_pred_shift_0(ins uint32, d *decod
 
 func decode_sve_sve_int_pred_shift_sve_int_bin_pred_shift_1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_shift_1
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.R = (ins >> 18) & 0x1
 	d.L = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x1 && d.U == 0x0:
@@ -1375,13 +1375,13 @@ func decode_sve_sve_int_pred_shift_sve_int_bin_pred_shift_1(ins uint32, d *decod
 
 func decode_sve_sve_int_pred_shift_sve_int_bin_pred_shift_2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_pred_shift_2
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.R = (ins >> 18) & 0x1
 	d.L = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.R == 0x0 && d.L == 0x0 && d.U == 0x0:
@@ -1401,7 +1401,7 @@ func decode_sve_sve_int_pred_shift_sve_int_bin_pred_shift_2(ins uint32, d *decod
 }
 
 func decode_sve_sve_int_pred_un(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x3
+	op0 := (ins >> 19) & 0x3
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -1418,11 +1418,11 @@ func decode_sve_sve_int_pred_un(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_pred_un_sve_int_un_pred_arit_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_un_pred_arit_0
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1449,11 +1449,11 @@ func decode_sve_sve_int_pred_un_sve_int_un_pred_arit_0(ins uint32, d *decoded) (
 
 func decode_sve_sve_int_pred_un_sve_int_un_pred_arit_1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_un_pred_arit_1
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1480,11 +1480,11 @@ func decode_sve_sve_int_pred_un_sve_int_un_pred_arit_1(ins uint32, d *decoded) (
 
 func decode_sve_sve_int_bin_cons_arit_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_arit_0
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1508,7 +1508,7 @@ func decode_sve_sve_int_bin_cons_arit_0(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_int_unpred_logical(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 12) & 0x7
+	op0 := (ins >> 10) & 0x7
 
 	switch {
 	case (op0 & 0x4) == 0x0:
@@ -1527,10 +1527,10 @@ func decode_sve_sve_int_unpred_logical(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_unpred_logical_sve_int_bin_cons_log(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_log
-	d.opc = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1549,22 +1549,22 @@ func decode_sve_sve_int_unpred_logical_sve_int_bin_cons_log(ins uint32, d *decod
 
 func decode_sve_sve_int_unpred_logical_sve_int_rotate_imm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_rotate_imm
-	d.tszh = (ins >> 23) & 0x3
-	d.tszl = (ins >> 20) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.tszh = (ins >> 22) & 0x3
+	d.tszl = (ins >> 19) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_xar_z_zzi_
 	return
 }
 
 func decode_sve_sve_int_unpred_logical_sve_int_tern_log(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_tern_log
-	d.opc = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.o2 = (ins >> 10) & 0x1
-	d.Zk = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Zk = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.o2 == 0x0:
@@ -1588,7 +1588,7 @@ func decode_sve_sve_int_unpred_logical_sve_int_tern_log(ins uint32, d *decoded) 
 }
 
 func decode_sve_sve_index(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 11) & 0x3
+	op0 := (ins >> 10) & 0x3
 
 	switch {
 	case op0 == 0x0:
@@ -1607,40 +1607,40 @@ func decode_sve_sve_index(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_index_sve_int_index_ii(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_index_ii
-	d.size = (ins >> 23) & 0x3
-	d.imm5b = (ins >> 20) & 0x1f
-	d.imm5 = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.imm5b = (ins >> 16) & 0x1f
+	d.imm5 = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_index_z_ii_
 	return
 }
 
 func decode_sve_sve_index_sve_int_index_ri(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_index_ri
-	d.size = (ins >> 23) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_index_z_ri_
 	return
 }
 
 func decode_sve_sve_index_sve_int_index_ir(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_index_ir
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.imm5 = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.imm5 = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_index_z_ir_
 	return
 }
 
 func decode_sve_sve_index_sve_int_index_rr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_index_rr
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_index_z_rr_
 	return
 }
@@ -1665,9 +1665,9 @@ func decode_sve_sve_alloca(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_alloca_sve_int_arith_vl(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_arith_vl
 	d.op = (ins >> 22) & 0x1
-	d.Rn = (ins >> 20) & 0x1f
-	d.imm6 = (ins >> 10) & 0x3f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rn = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 5) & 0x3f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -1683,9 +1683,9 @@ func decode_sve_sve_alloca_sve_int_arith_vl(ins uint32, d *decoded) (err error) 
 func decode_sve_sve_alloca_sve_int_read_vl_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_read_vl_a
 	d.op = (ins >> 22) & 0x1
-	d.opc2 = (ins >> 20) & 0x1f
-	d.imm6 = (ins >> 10) & 0x3f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opc2 = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 5) & 0x3f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && (d.opc2&0x10) == 0x0:
@@ -1709,7 +1709,7 @@ func decode_sve_sve_alloca_sve_int_read_vl_a(ins uint32, d *decoded) (err error)
 }
 
 func decode_sve_sve_int_unpred_arit_b(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 12) & 0x3
+	op0 := (ins >> 11) & 0x3
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -1726,11 +1726,11 @@ func decode_sve_sve_int_unpred_arit_b(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_unpred_arit_b_sve_int_mul_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_mul_b
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1753,11 +1753,11 @@ func decode_sve_sve_int_unpred_arit_b_sve_int_mul_b(ins uint32, d *decoded) (err
 
 func decode_sve_sve_int_unpred_arit_b_sve_int_sqdmulh(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_sqdmulh
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.R = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.R == 0x0:
@@ -1786,11 +1786,11 @@ func decode_sve_sve_int_unpred_shift(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_unpred_shift_sve_int_bin_cons_shift_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_shift_a
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1809,12 +1809,12 @@ func decode_sve_sve_int_unpred_shift_sve_int_bin_cons_shift_a(ins uint32, d *dec
 
 func decode_sve_sve_int_unpred_shift_sve_int_bin_cons_shift_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_shift_b
-	d.tszh = (ins >> 23) & 0x3
-	d.tszl = (ins >> 20) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
-	d.opc = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.tszh = (ins >> 22) & 0x3
+	d.tszl = (ins >> 19) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
+	d.opc = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1833,11 +1833,11 @@ func decode_sve_sve_int_unpred_shift_sve_int_bin_cons_shift_b(ins uint32, d *dec
 
 func decode_sve_sve_int_bin_cons_misc_0_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_misc_0_a
-	d.opc = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.msz = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.msz = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1853,7 +1853,7 @@ func decode_sve_sve_int_bin_cons_misc_0_a(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_int_unpred_misc(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 11) & 0x3
+	op0 := (ins >> 10) & 0x3
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -1870,11 +1870,11 @@ func decode_sve_sve_int_unpred_misc(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_unpred_misc_sve_int_bin_cons_misc_0_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_misc_0_b
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -1889,10 +1889,10 @@ func decode_sve_sve_int_unpred_misc_sve_int_bin_cons_misc_0_b(ins uint32, d *dec
 
 func decode_sve_sve_int_unpred_misc_sve_int_bin_cons_misc_0_c(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_misc_0_c
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -1915,10 +1915,10 @@ func decode_sve_sve_int_unpred_misc_sve_int_bin_cons_misc_0_c(ins uint32, d *dec
 
 func decode_sve_sve_int_unpred_misc_sve_int_bin_cons_misc_0_d(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_bin_cons_misc_0_d
-	d.opc = (ins >> 23) & 0x3
-	d.opc2 = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.opc2 = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.opc2 == 0x0:
@@ -1945,7 +1945,7 @@ func decode_sve_sve_int_unpred_misc_sve_int_bin_cons_misc_0_d(ins uint32, d *dec
 
 func decode_sve_sve_countelt(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 20) & 0x1
-	op1 := (ins >> 13) & 0x7
+	op1 := (ins >> 11) & 0x7
 
 	switch {
 	case op0 == 0x0 && (op1&0x6) == 0x0:
@@ -1972,12 +1972,12 @@ func decode_sve_sve_countelt(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_countelt_sve_int_countvlv0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_countvlv0
-	d.size = (ins >> 23) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
 	d.D = (ins >> 11) & 0x1
 	d.U = (ins >> 10) & 0x1
-	d.pattern = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.pattern = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0:
@@ -2014,11 +2014,11 @@ func decode_sve_sve_countelt_sve_int_countvlv0(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_countelt_sve_int_count(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_count
-	d.size = (ins >> 23) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
 	d.op = (ins >> 10) & 0x1
-	d.pattern = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.pattern = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x1:
@@ -2039,11 +2039,11 @@ func decode_sve_sve_countelt_sve_int_count(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_countelt_sve_int_countvlv1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_countvlv1
-	d.size = (ins >> 23) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
 	d.D = (ins >> 10) & 0x1
-	d.pattern = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.pattern = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0:
@@ -2068,11 +2068,11 @@ func decode_sve_sve_countelt_sve_int_countvlv1(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_countelt_sve_int_pred_pattern_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_pred_pattern_a
-	d.size = (ins >> 23) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
 	d.D = (ins >> 10) & 0x1
-	d.pattern = (ins >> 9) & 0x1f
-	d.Rdn = (ins >> 4) & 0x1f
+	d.pattern = (ins >> 5) & 0x1f
+	d.Rdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.D == 0x0:
@@ -2099,13 +2099,13 @@ func decode_sve_sve_countelt_sve_int_pred_pattern_a(ins uint32, d *decoded) (err
 
 func decode_sve_sve_countelt_sve_int_pred_pattern_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_pred_pattern_b
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.sf = (ins >> 20) & 0x1
-	d.imm4 = (ins >> 19) & 0xf
+	d.imm4 = (ins >> 16) & 0xf
 	d.D = (ins >> 11) & 0x1
 	d.U = (ins >> 10) & 0x1
-	d.pattern = (ins >> 9) & 0x1f
-	d.Rdn = (ins >> 4) & 0x1f
+	d.pattern = (ins >> 5) & 0x1f
+	d.Rdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.sf == 0x0 && d.D == 0x0 && d.U == 0x0:
@@ -2179,8 +2179,8 @@ func decode_sve_sve_countelt_sve_int_pred_pattern_b(ins uint32, d *decoded) (err
 }
 
 func decode_sve_sve_maskimm(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 23) & 0x3
-	op1 := (ins >> 19) & 0x3
+	op0 := (ins >> 22) & 0x3
+	op1 := (ins >> 18) & 0x3
 
 	switch {
 	case op0 == 0x3 && op1 == 0x0:
@@ -2197,17 +2197,17 @@ func decode_sve_sve_maskimm(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_maskimm_sve_int_dup_mask_imm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_dup_mask_imm
-	d.imm13 = (ins >> 17) & 0x1fff
-	d.Zd = (ins >> 4) & 0x1f
+	d.imm13 = (ins >> 5) & 0x1fff
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_dupm_z_i_
 	return
 }
 
 func decode_sve_sve_maskimm_sve_int_log_imm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_log_imm
-	d.opc = (ins >> 23) & 0x3
-	d.imm13 = (ins >> 17) & 0x1fff
-	d.Zdn = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm13 = (ins >> 5) & 0x1fff
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -2223,7 +2223,7 @@ func decode_sve_sve_maskimm_sve_int_log_imm(ins uint32, d *decoded) (err error) 
 }
 
 func decode_sve_sve_wideimm_pred(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 15) & 0x7
+	op0 := (ins >> 13) & 0x7
 
 	switch {
 	case (op0 & 0x4) == 0x0:
@@ -2242,12 +2242,12 @@ func decode_sve_sve_wideimm_pred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_wideimm_pred_sve_int_dup_imm_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_dup_imm_pred
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 19) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 16) & 0xf
 	d.M = (ins >> 14) & 0x1
 	d.sh = (ins >> 13) & 0x1
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zd = (ins >> 4) & 0x1f
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.M == 0x0:
@@ -2262,31 +2262,31 @@ func decode_sve_sve_wideimm_pred_sve_int_dup_imm_pred(ins uint32, d *decoded) (e
 
 func decode_sve_sve_wideimm_pred_sve_int_dup_fpimm_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_dup_fpimm_pred
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 19) & 0xf
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 16) & 0xf
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_fcpy_z_p_i_
 	return
 }
 
 func decode_sve_sve_int_perm_dup_i(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_dup_i
-	d.imm2 = (ins >> 23) & 0x3
-	d.tsz = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.imm2 = (ins >> 22) & 0x3
+	d.tsz = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_dup_z_zi_
 	return
 }
 
 func decode_sve_sve_int_perm_tbl_3src(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_tbl_3src
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -2301,17 +2301,17 @@ func decode_sve_sve_int_perm_tbl_3src(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_perm_tbl(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_tbl
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_tbl_z_zz_1
 	return
 }
 
 func decode_sve_sve_perm_unpred_d(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x3
-	op1 := (ins >> 18) & 0x7
+	op0 := (ins >> 19) & 0x3
+	op1 := (ins >> 16) & 0x7
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0:
@@ -2344,29 +2344,29 @@ func decode_sve_sve_perm_unpred_d(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_perm_unpred_d_sve_int_perm_dup_r(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_dup_r
-	d.size = (ins >> 23) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_dup_z_r_
 	return
 }
 
 func decode_sve_sve_perm_unpred_d_sve_int_perm_insrs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_insrs
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_insr_z_r_
 	return
 }
 
 func decode_sve_sve_perm_unpred_d_sve_int_perm_unpk(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_unpk
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.U = (ins >> 17) & 0x1
 	d.H = (ins >> 16) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0 && d.H == 0x0:
@@ -2385,26 +2385,26 @@ func decode_sve_sve_perm_unpred_d_sve_int_perm_unpk(ins uint32, d *decoded) (err
 
 func decode_sve_sve_perm_unpred_d_sve_int_perm_insrv(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_insrv
-	d.size = (ins >> 23) & 0x3
-	d.Vm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Vm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_insr_z_v_
 	return
 }
 
 func decode_sve_sve_perm_unpred_d_sve_int_perm_reverse_z(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_reverse_z
-	d.size = (ins >> 23) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_rev_z_z_
 	return
 }
 
 func decode_sve_sve_perm_predicates(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 23) & 0x3
-	op1 := (ins >> 20) & 0x1f
-	op2 := (ins >> 12) & 0xf
+	op0 := (ins >> 22) & 0x3
+	op1 := (ins >> 16) & 0x1f
+	op2 := (ins >> 9) & 0xf
 	op3 := (ins >> 4) & 0x1
 
 	switch {
@@ -2447,8 +2447,8 @@ func decode_sve_sve_perm_predicates(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_perm_predicates_sve_int_perm_punpk(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_punpk
 	d.H = (ins >> 16) & 0x1
-	d.Pn = (ins >> 8) & 0xf
-	d.Pd = (ins >> 3) & 0xf
+	d.Pn = (ins >> 5) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.H == 0x0:
@@ -2463,12 +2463,12 @@ func decode_sve_sve_perm_predicates_sve_int_perm_punpk(ins uint32, d *decoded) (
 
 func decode_sve_sve_perm_predicates_sve_int_perm_bin_perm_pp(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_bin_perm_pp
-	d.size = (ins >> 23) & 0x3
-	d.Pm = (ins >> 19) & 0xf
-	d.opc = (ins >> 12) & 0x3
+	d.size = (ins >> 22) & 0x3
+	d.Pm = (ins >> 16) & 0xf
+	d.opc = (ins >> 11) & 0x3
 	d.H = (ins >> 10) & 0x1
-	d.Pn = (ins >> 8) & 0xf
-	d.Pd = (ins >> 3) & 0xf
+	d.Pn = (ins >> 5) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.opc == 0x0 && d.H == 0x0:
@@ -2493,20 +2493,20 @@ func decode_sve_sve_perm_predicates_sve_int_perm_bin_perm_pp(ins uint32, d *deco
 
 func decode_sve_sve_perm_predicates_sve_int_perm_reverse_p(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_reverse_p
-	d.size = (ins >> 23) & 0x3
-	d.Pn = (ins >> 8) & 0xf
-	d.Pd = (ins >> 3) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.Pn = (ins >> 5) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 	d.encoding = encoding_rev_p_p_
 	return
 }
 
 func decode_sve_sve_int_perm_bin_perm_zz(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_bin_perm_zz
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -2531,7 +2531,7 @@ func decode_sve_sve_int_perm_bin_perm_zz(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_perm_pred(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 20) & 0x1
-	op1 := (ins >> 19) & 0x7
+	op1 := (ins >> 17) & 0x7
 	op2 := (ins >> 16) & 0x1
 	op3 := (ins >> 13) & 0x1
 
@@ -2584,31 +2584,31 @@ func decode_sve_sve_perm_pred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_perm_pred_sve_int_perm_cpy_v(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_cpy_v
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Vn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Vn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_cpy_z_p_v_
 	return
 }
 
 func decode_sve_sve_perm_pred_sve_int_perm_compact(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_compact
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_compact_z_p_z_
 	return
 }
 
 func decode_sve_sve_perm_pred_sve_int_perm_last_r(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_last_r
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.B = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.B == 0x0:
@@ -2623,11 +2623,11 @@ func decode_sve_sve_perm_pred_sve_int_perm_last_r(ins uint32, d *decoded) (err e
 
 func decode_sve_sve_perm_pred_sve_int_perm_last_v(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_last_v
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.B = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Vd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Vd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.B == 0x0:
@@ -2642,11 +2642,11 @@ func decode_sve_sve_perm_pred_sve_int_perm_last_v(ins uint32, d *decoded) (err e
 
 func decode_sve_sve_perm_pred_sve_int_perm_rev(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_rev
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -2665,21 +2665,21 @@ func decode_sve_sve_perm_pred_sve_int_perm_rev(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_perm_pred_sve_int_perm_cpy_r(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_cpy_r
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_cpy_z_p_r_
 	return
 }
 
 func decode_sve_sve_perm_pred_sve_int_perm_clast_zz(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_clast_zz
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.B = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.B == 0x0:
@@ -2694,11 +2694,11 @@ func decode_sve_sve_perm_pred_sve_int_perm_clast_zz(ins uint32, d *decoded) (err
 
 func decode_sve_sve_perm_pred_sve_int_perm_clast_vz(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_clast_vz
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.B = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Vdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Vdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.B == 0x0:
@@ -2713,30 +2713,30 @@ func decode_sve_sve_perm_pred_sve_int_perm_clast_vz(ins uint32, d *decoded) (err
 
 func decode_sve_sve_perm_pred_sve_int_perm_splice(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_splice
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_splice_z_p_zz_des
 	return
 }
 
 func decode_sve_sve_perm_pred_sve_intx_perm_splice(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_perm_splice
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_splice_z_p_zz_con
 	return
 }
 
 func decode_sve_sve_perm_pred_sve_int_perm_revd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_revd
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0:
@@ -2753,11 +2753,11 @@ func decode_sve_sve_perm_pred_sve_int_perm_revd(ins uint32, d *decoded) (err err
 
 func decode_sve_sve_perm_pred_sve_int_perm_clast_rz(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_clast_rz
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.B = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Rdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Rdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.B == 0x0:
@@ -2772,11 +2772,11 @@ func decode_sve_sve_perm_pred_sve_int_perm_clast_rz(ins uint32, d *decoded) (err
 
 func decode_sve_sve_int_sel_vvv(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_sel_vvv
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 13) & 0xf
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0xf
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_sel_z_p_zz_
 	return
 }
@@ -2797,20 +2797,20 @@ func decode_sve_sve_perm_extract(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_perm_extract_sve_int_perm_extract_i(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_extract_i
-	d.imm8h = (ins >> 20) & 0x1f
-	d.imm8l = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.imm8h = (ins >> 16) & 0x1f
+	d.imm8l = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_ext_z_zi_des
 	return
 }
 
 func decode_sve_sve_perm_extract_sve_intx_perm_extract_i(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_perm_extract_i
-	d.imm8h = (ins >> 20) & 0x1f
-	d.imm8l = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.imm8h = (ins >> 16) & 0x1f
+	d.imm8l = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_ext_z_zi_con
 	return
 }
@@ -2831,11 +2831,11 @@ func decode_sve_sve_perm_inter_long(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_perm_inter_long_sve_int_perm_bin_long_perm_zz(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_perm_bin_long_perm_zz
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 12) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 11) & 0x3
 	d.H = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.H == 0x0:
@@ -2874,14 +2874,14 @@ func decode_sve_sve_cmpvec(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_cmpvec_sve_int_cmp_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_cmp_0
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 15) & 0x1
 	d.o2 = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.ne = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.o2 == 0x0 && d.ne == 0x0:
@@ -2908,14 +2908,14 @@ func decode_sve_sve_cmpvec_sve_int_cmp_0(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_cmpvec_sve_int_cmp_1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_cmp_1
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 15) & 0x1
 	d.lt = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.ne = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.U == 0x0 && d.lt == 0x0 && d.ne == 0x0:
@@ -2942,13 +2942,13 @@ func decode_sve_sve_cmpvec_sve_int_cmp_1(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_ucmp_vi(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_ucmp_vi
-	d.size = (ins >> 23) & 0x3
-	d.imm7 = (ins >> 20) & 0x7f
+	d.size = (ins >> 22) & 0x3
+	d.imm7 = (ins >> 14) & 0x7f
 	d.lt = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.ne = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.lt == 0x0 && d.ne == 0x0:
@@ -2967,14 +2967,14 @@ func decode_sve_sve_int_ucmp_vi(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_int_scmp_vi(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_scmp_vi
-	d.size = (ins >> 23) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
 	d.op = (ins >> 15) & 0x1
 	d.o2 = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.ne = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.o2 == 0x0 && d.ne == 0x0:
@@ -3001,12 +3001,12 @@ func decode_sve_sve_int_pred_log(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_pred_log
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pm = (ins >> 19) & 0xf
-	d.Pg = (ins >> 13) & 0xf
+	d.Pm = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0xf
 	d.o2 = (ins >> 9) & 0x1
-	d.Pn = (ins >> 8) & 0xf
+	d.Pn = (ins >> 5) & 0xf
 	d.o3 = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0 && d.o2 == 0x0 && d.o3 == 0x0:
@@ -3065,11 +3065,11 @@ func decode_sve_sve_pred_gen_b_sve_int_brkp(ins uint32, d *decoded) (err error) 
 	d.iclass = iclass_sve_int_brkp
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pm = (ins >> 19) & 0xf
-	d.Pg = (ins >> 13) & 0xf
-	d.Pn = (ins >> 8) & 0xf
+	d.Pm = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0xf
+	d.Pn = (ins >> 5) & 0xf
 	d.B = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0 && d.B == 0x0:
@@ -3090,7 +3090,7 @@ func decode_sve_sve_pred_gen_b_sve_int_brkp(ins uint32, d *decoded) (err error) 
 
 func decode_sve_sve_pred_gen_c(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 23) & 0x1
-	op1 := (ins >> 19) & 0xf
+	op1 := (ins >> 16) & 0xf
 	op2 := (ins >> 9) & 0x1
 	op3 := (ins >> 4) & 0x1
 
@@ -3122,9 +3122,9 @@ func decode_sve_sve_pred_gen_c(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_pred_gen_c_sve_int_brkn(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_brkn
 	d.S = (ins >> 22) & 0x1
-	d.Pg = (ins >> 13) & 0xf
-	d.Pn = (ins >> 8) & 0xf
-	d.Pdm = (ins >> 3) & 0xf
+	d.Pg = (ins >> 10) & 0xf
+	d.Pn = (ins >> 5) & 0xf
+	d.Pdm = (ins >> 0) & 0xf
 
 	switch {
 	case d.S == 0x0:
@@ -3141,10 +3141,10 @@ func decode_sve_sve_pred_gen_c_sve_int_break(ins uint32, d *decoded) (err error)
 	d.iclass = iclass_sve_int_break
 	d.B = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pg = (ins >> 13) & 0xf
-	d.Pn = (ins >> 8) & 0xf
+	d.Pg = (ins >> 10) & 0xf
+	d.Pn = (ins >> 5) & 0xf
 	d.M = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.S == 0x1 && d.M == 0x1:
@@ -3164,10 +3164,10 @@ func decode_sve_sve_pred_gen_c_sve_int_break(ins uint32, d *decoded) (err error)
 }
 
 func decode_sve_sve_pred_gen_d(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 19) & 0xf
-	op1 := (ins >> 13) & 0x7
-	op2 := (ins >> 10) & 0x3
-	op3 := (ins >> 8) & 0xf
+	op0 := (ins >> 16) & 0xf
+	op1 := (ins >> 11) & 0x7
+	op2 := (ins >> 9) & 0x3
+	op3 := (ins >> 5) & 0xf
 	op4 := (ins >> 4) & 0x1
 
 	switch {
@@ -3229,9 +3229,9 @@ func decode_sve_sve_pred_gen_d_sve_int_ptest(ins uint32, d *decoded) (err error)
 	d.iclass = iclass_sve_int_ptest
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pg = (ins >> 13) & 0xf
-	d.Pn = (ins >> 8) & 0xf
-	d.opc2 = (ins >> 3) & 0xf
+	d.Pg = (ins >> 10) & 0xf
+	d.Pn = (ins >> 5) & 0xf
+	d.opc2 = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0:
@@ -3258,8 +3258,8 @@ func decode_sve_sve_pred_gen_d_sve_int_pfirst(ins uint32, d *decoded) (err error
 	d.iclass = iclass_sve_int_pfirst
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pg = (ins >> 8) & 0xf
-	d.Pdn = (ins >> 3) & 0xf
+	d.Pg = (ins >> 5) & 0xf
+	d.Pdn = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0:
@@ -3278,7 +3278,7 @@ func decode_sve_sve_pred_gen_d_sve_int_pfalse(ins uint32, d *decoded) (err error
 	d.iclass = iclass_sve_int_pfalse
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0:
@@ -3297,8 +3297,8 @@ func decode_sve_sve_pred_gen_d_sve_int_rdffr(ins uint32, d *decoded) (err error)
 	d.iclass = iclass_sve_int_rdffr
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pg = (ins >> 8) & 0xf
-	d.Pd = (ins >> 3) & 0xf
+	d.Pg = (ins >> 5) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0:
@@ -3315,9 +3315,9 @@ func decode_sve_sve_pred_gen_d_sve_int_rdffr(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_pred_gen_d_sve_int_pnext(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_pnext
-	d.size = (ins >> 23) & 0x3
-	d.Pg = (ins >> 8) & 0xf
-	d.Pdn = (ins >> 3) & 0xf
+	d.size = (ins >> 22) & 0x3
+	d.Pg = (ins >> 5) & 0xf
+	d.Pdn = (ins >> 0) & 0xf
 	d.encoding = encoding_pnext_p_p_p_
 	return
 }
@@ -3326,7 +3326,7 @@ func decode_sve_sve_pred_gen_d_sve_int_rdffr_2(ins uint32, d *decoded) (err erro
 	d.iclass = iclass_sve_int_rdffr_2
 	d.op = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0:
@@ -3343,10 +3343,10 @@ func decode_sve_sve_pred_gen_d_sve_int_rdffr_2(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_pred_gen_d_sve_int_ptrue(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_ptrue
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.S = (ins >> 16) & 0x1
-	d.pattern = (ins >> 9) & 0x1f
-	d.Pd = (ins >> 3) & 0xf
+	d.pattern = (ins >> 5) & 0x1f
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.S == 0x0:
@@ -3360,9 +3360,9 @@ func decode_sve_sve_pred_gen_d_sve_int_ptrue(ins uint32, d *decoded) (err error)
 }
 
 func decode_sve_sve_cmpgpr(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 13) & 0x3
-	op1 := (ins >> 11) & 0x3
-	op2 := (ins >> 3) & 0xf
+	op0 := (ins >> 12) & 0x3
+	op1 := (ins >> 10) & 0x3
+	op2 := (ins >> 0) & 0xf
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -3383,14 +3383,14 @@ func decode_sve_sve_cmpgpr(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_cmpgpr_sve_int_while_rr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_while_rr
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
 	d.sf = (ins >> 12) & 0x1
 	d.U = (ins >> 11) & 0x1
 	d.lt = (ins >> 10) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
 	d.eq = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.U == 0x0 && d.lt == 0x0 && d.eq == 0x0:
@@ -3419,8 +3419,8 @@ func decode_sve_sve_cmpgpr_sve_int_cterm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_cterm
 	d.op = (ins >> 23) & 0x1
 	d.sz = (ins >> 22) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
 	d.ne = (ins >> 4) & 0x1
 
 	switch {
@@ -3438,11 +3438,11 @@ func decode_sve_sve_cmpgpr_sve_int_cterm(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_cmpgpr_sve_int_whilenc(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_whilenc
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
 	d.rw = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.rw == 0x0:
@@ -3459,12 +3459,12 @@ func decode_sve_sve_int_pred_dup(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_pred_dup
 	d.i1 = (ins >> 23) & 0x1
 	d.tszh = (ins >> 22) & 0x1
-	d.tszl = (ins >> 20) & 0x7
-	d.Rv = (ins >> 17) & 0x3
-	d.Pn = (ins >> 13) & 0xf
+	d.tszl = (ins >> 18) & 0x7
+	d.Rv = (ins >> 16) & 0x3
+	d.Pn = (ins >> 10) & 0xf
 	d.S = (ins >> 9) & 0x1
-	d.Pm = (ins >> 8) & 0xf
-	d.Pd = (ins >> 3) & 0xf
+	d.Pm = (ins >> 5) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.S == 0x0:
@@ -3478,7 +3478,7 @@ func decode_sve_sve_int_pred_dup(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_wideimm_unpred(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x3
+	op0 := (ins >> 19) & 0x3
 	op1 := (ins >> 16) & 0x1
 
 	switch {
@@ -3500,11 +3500,11 @@ func decode_sve_sve_wideimm_unpred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_wideimm_unpred_sve_int_arith_imm0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_arith_imm0
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
 	d.sh = (ins >> 13) & 0x1
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zdn = (ins >> 4) & 0x1f
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -3531,11 +3531,11 @@ func decode_sve_sve_wideimm_unpred_sve_int_arith_imm0(ins uint32, d *decoded) (e
 
 func decode_sve_sve_wideimm_unpred_sve_int_arith_imm1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_arith_imm1
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
 	d.o2 = (ins >> 13) & 0x1
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zdn = (ins >> 4) & 0x1f
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opc&0x4) == 0x0 && d.o2 == 0x1:
@@ -3558,11 +3558,11 @@ func decode_sve_sve_wideimm_unpred_sve_int_arith_imm1(ins uint32, d *decoded) (e
 
 func decode_sve_sve_wideimm_unpred_sve_int_arith_imm2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_arith_imm2
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
 	d.o2 = (ins >> 13) & 0x1
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zdn = (ins >> 4) & 0x1f
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.o2 == 0x0:
@@ -3583,11 +3583,11 @@ func decode_sve_sve_wideimm_unpred_sve_int_arith_imm2(ins uint32, d *decoded) (e
 
 func decode_sve_sve_wideimm_unpred_sve_int_dup_imm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_dup_imm
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x3
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 17) & 0x3
 	d.sh = (ins >> 13) & 0x1
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zd = (ins >> 4) & 0x1f
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -3604,11 +3604,11 @@ func decode_sve_sve_wideimm_unpred_sve_int_dup_imm(ins uint32, d *decoded) (err 
 
 func decode_sve_sve_wideimm_unpred_sve_int_dup_fpimm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_dup_fpimm
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x3
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 17) & 0x3
 	d.o2 = (ins >> 13) & 0x1
-	d.imm8 = (ins >> 12) & 0xff
-	d.Zd = (ins >> 4) & 0x1f
+	d.imm8 = (ins >> 5) & 0xff
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.o2 == 0x0:
@@ -3641,11 +3641,11 @@ func decode_sve_sve_pred_count_a(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_pred_count_a_sve_int_pcount_pred(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_pcount_pred
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 13) & 0xf
-	d.Pn = (ins >> 8) & 0xf
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0xf
+	d.Pn = (ins >> 5) & 0xf
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -3683,12 +3683,12 @@ func decode_sve_sve_pred_count_b(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_pred_count_b_sve_int_count_v_sat(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_count_v_sat
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.D = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.opc = (ins >> 10) & 0x3
-	d.Pm = (ins >> 8) & 0xf
-	d.Zdn = (ins >> 4) & 0x1f
+	d.opc = (ins >> 9) & 0x3
+	d.Pm = (ins >> 5) & 0xf
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x1:
@@ -3711,13 +3711,13 @@ func decode_sve_sve_pred_count_b_sve_int_count_v_sat(ins uint32, d *decoded) (er
 
 func decode_sve_sve_pred_count_b_sve_int_count_r_sat(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_count_r_sat
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.D = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
 	d.sf = (ins >> 10) & 0x1
 	d.op = (ins >> 9) & 0x1
-	d.Pm = (ins >> 8) & 0xf
-	d.Rdn = (ins >> 4) & 0x1f
+	d.Pm = (ins >> 5) & 0xf
+	d.Rdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x1:
@@ -3746,12 +3746,12 @@ func decode_sve_sve_pred_count_b_sve_int_count_r_sat(ins uint32, d *decoded) (er
 
 func decode_sve_sve_pred_count_b_sve_int_count_v(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_count_v
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 17) & 0x1
 	d.D = (ins >> 16) & 0x1
-	d.opc2 = (ins >> 10) & 0x3
-	d.Pm = (ins >> 8) & 0xf
-	d.Zdn = (ins >> 4) & 0x1f
+	d.opc2 = (ins >> 9) & 0x3
+	d.Pm = (ins >> 5) & 0xf
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.opc2 == 0x1:
@@ -3772,12 +3772,12 @@ func decode_sve_sve_pred_count_b_sve_int_count_v(ins uint32, d *decoded) (err er
 
 func decode_sve_sve_pred_count_b_sve_int_count_r(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_count_r
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 17) & 0x1
 	d.D = (ins >> 16) & 0x1
-	d.opc2 = (ins >> 10) & 0x3
-	d.Pm = (ins >> 8) & 0xf
-	d.Rdn = (ins >> 4) & 0x1f
+	d.opc2 = (ins >> 9) & 0x3
+	d.Pm = (ins >> 5) & 0xf
+	d.Rdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.opc2 == 0x1:
@@ -3798,10 +3798,10 @@ func decode_sve_sve_pred_count_b_sve_int_count_r(ins uint32, d *decoded) (err er
 
 func decode_sve_sve_pred_wrffr(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 18) & 0x1
-	op1 := (ins >> 17) & 0x3
-	op2 := (ins >> 11) & 0x7
-	op3 := (ins >> 8) & 0xf
-	op4 := (ins >> 4) & 0x1f
+	op1 := (ins >> 16) & 0x3
+	op2 := (ins >> 9) & 0x7
+	op3 := (ins >> 5) & 0xf
+	op4 := (ins >> 0) & 0x1f
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0 && op2 == 0x0 && op4 == 0x0:
@@ -3830,8 +3830,8 @@ func decode_sve_sve_pred_wrffr(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_pred_wrffr_sve_int_wrffr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_wrffr
-	d.opc = (ins >> 23) & 0x3
-	d.Pn = (ins >> 8) & 0xf
+	d.opc = (ins >> 22) & 0x3
+	d.Pn = (ins >> 5) & 0xf
 
 	switch {
 	case d.opc == 0x0:
@@ -3848,7 +3848,7 @@ func decode_sve_sve_pred_wrffr_sve_int_wrffr(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_pred_wrffr_sve_int_setffr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_int_setffr
-	d.opc = (ins >> 23) & 0x3
+	d.opc = (ins >> 22) & 0x3
 
 	switch {
 	case d.opc == 0x0:
@@ -3864,7 +3864,7 @@ func decode_sve_sve_pred_wrffr_sve_int_setffr(ins uint32, d *decoded) (err error
 }
 
 func decode_sve_sve_intx_muladd_unpred(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 14) & 0x1f
+	op0 := (ins >> 10) & 0x1f
 
 	switch {
 	case (op0 & 0x1e) == 0x0:
@@ -3893,11 +3893,11 @@ func decode_sve_sve_intx_muladd_unpred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_dot(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_dot
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0:
@@ -3912,11 +3912,11 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_dot(ins uint32, d *decoded) (err
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_qdmlalbt(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qdmlalbt
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0:
@@ -3931,23 +3931,23 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_qdmlalbt(ins uint32, d *decoded)
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_cdot(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cdot
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.rot = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.rot = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 	d.encoding = encoding_cdot_z_zzz_
 	return
 }
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_cmla(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cmla
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 12) & 0x1
-	d.rot = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.rot = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -3962,13 +3962,13 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_cmla(ins uint32, d *decoded) (er
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_mlal_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mlal_long
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 12) & 0x1
 	d.U = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0 && d.U == 0x0 && d.T == 0x0:
@@ -3995,12 +3995,12 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_mlal_long(ins uint32, d *decoded
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_qdmlal_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qdmlal_long
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0 && d.T == 0x0:
@@ -4019,11 +4019,11 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_qdmlal_long(ins uint32, d *decod
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_qrdmlah(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qrdmlah
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0:
@@ -4038,10 +4038,10 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_qrdmlah(ins uint32, d *decoded) 
 
 func decode_sve_sve_intx_muladd_unpred_sve_intx_mixed_dot(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mixed_dot
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4057,7 +4057,7 @@ func decode_sve_sve_intx_muladd_unpred_sve_intx_mixed_dot(ins uint32, d *decoded
 }
 
 func decode_sve_sve_intx_predicated(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0xf
+	op0 := (ins >> 17) & 0xf
 	op1 := (ins >> 13) & 0x1
 
 	switch {
@@ -4087,11 +4087,11 @@ func decode_sve_sve_intx_predicated(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_predicated_sve_intx_accumulate_long_pairs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_accumulate_long_pairs
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0:
@@ -4106,12 +4106,12 @@ func decode_sve_sve_intx_predicated_sve_intx_accumulate_long_pairs(ins uint32, d
 
 func decode_sve_sve_intx_predicated_sve_intx_pred_arith_unary(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_pred_arith_unary
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.Q = (ins >> 19) & 0x1
-	d.opc = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opc & 0x2) == 0x2:
@@ -4132,14 +4132,14 @@ func decode_sve_sve_intx_predicated_sve_intx_pred_arith_unary(ins uint32, d *dec
 
 func decode_sve_sve_intx_predicated_sve_intx_bin_pred_shift_sat_round(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_bin_pred_shift_sat_round
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.Q = (ins >> 19) & 0x1
 	d.R = (ins >> 18) & 0x1
 	d.N = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.Q == 0x0 && d.N == 0x0:
@@ -4176,13 +4176,13 @@ func decode_sve_sve_intx_predicated_sve_intx_bin_pred_shift_sat_round(ins uint32
 
 func decode_sve_sve_intx_predicated_sve_intx_pred_arith_binary(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_pred_arith_binary
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.R = (ins >> 18) & 0x1
 	d.S = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.R == 0x0 && d.S == 0x0 && d.U == 0x0:
@@ -4209,12 +4209,12 @@ func decode_sve_sve_intx_predicated_sve_intx_pred_arith_binary(ins uint32, d *de
 
 func decode_sve_sve_intx_predicated_sve_intx_arith_binary_pairs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_arith_binary_pairs
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x3
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 17) & 0x3
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.U == 0x0:
@@ -4239,13 +4239,13 @@ func decode_sve_sve_intx_predicated_sve_intx_arith_binary_pairs(ins uint32, d *d
 
 func decode_sve_sve_intx_predicated_sve_intx_pred_arith_binary_sat(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_pred_arith_binary_sat
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 18) & 0x1
 	d.S = (ins >> 17) & 0x1
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0 && d.U == 0x0:
@@ -4272,11 +4272,11 @@ func decode_sve_sve_intx_predicated_sve_intx_pred_arith_binary_sat(ins uint32, d
 
 func decode_sve_sve_intx_clamp(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_clamp
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0:
@@ -4290,7 +4290,7 @@ func decode_sve_sve_intx_clamp(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_intx_by_indexed_elem(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 15) & 0x3f
+	op0 := (ins >> 10) & 0x3f
 
 	switch {
 	case (op0 & 0x3e) == 0x0:
@@ -4331,11 +4331,11 @@ func decode_sve_sve_intx_by_indexed_elem(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_dot_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_dot_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.U = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4356,11 +4356,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_dot_by_indexed_elem(ins uint32
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_mla_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mla_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.S = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.S == 0x0:
@@ -4383,11 +4383,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_mla_by_indexed_elem(ins uint32
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_qrdmlah_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qrdmlah_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.S = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.S == 0x0:
@@ -4410,11 +4410,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_qrdmlah_by_indexed_elem(ins ui
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_mixed_dot_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mixed_dot_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.U = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4433,13 +4433,13 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_mixed_dot_by_indexed_elem(ins 
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_qdmla_long_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qdmla_long_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.S = (ins >> 12) & 0x1
 	d.il = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4468,11 +4468,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_qdmla_long_by_indexed_elem(ins
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_cdot_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cdot_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.rot = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.rot = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4489,11 +4489,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_cdot_by_indexed_elem(ins uint3
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_cmla_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cmla_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.rot = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.rot = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4510,11 +4510,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_cmla_by_indexed_elem(ins uint3
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_qrdcmla_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qrdcmla_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.rot = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.rot = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4531,14 +4531,14 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_qrdcmla_by_indexed_elem(ins ui
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_mla_long_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mla_long_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.S = (ins >> 13) & 0x1
 	d.U = (ins >> 12) & 0x1
 	d.il = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4583,13 +4583,13 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_mla_long_by_indexed_elem(ins u
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_mul_long_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mul_long_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.U = (ins >> 12) & 0x1
 	d.il = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4618,12 +4618,12 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_mul_long_by_indexed_elem(ins u
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_qdmul_long_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qdmul_long_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.il = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4644,11 +4644,11 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_qdmul_long_by_indexed_elem(ins
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_qdmulh_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_qdmulh_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.R = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.R == 0x0:
@@ -4671,10 +4671,10 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_qdmulh_by_indexed_elem(ins uin
 
 func decode_sve_sve_intx_by_indexed_elem_sve_intx_mul_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mul_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -4690,7 +4690,7 @@ func decode_sve_sve_intx_by_indexed_elem_sve_intx_mul_by_indexed_elem(ins uint32
 }
 
 func decode_sve_sve_intx_cons_widening(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 14) & 0x3
+	op0 := (ins >> 13) & 0x3
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -4707,14 +4707,14 @@ func decode_sve_sve_intx_cons_widening(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_cons_widening_sve_intx_cons_arith_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cons_arith_long
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 13) & 0x1
 	d.S = (ins >> 12) & 0x1
 	d.U = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.S == 0x0 && d.U == 0x0 && d.T == 0x0:
@@ -4751,13 +4751,13 @@ func decode_sve_sve_intx_cons_widening_sve_intx_cons_arith_long(ins uint32, d *d
 
 func decode_sve_sve_intx_cons_widening_sve_intx_cons_arith_wide(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cons_arith_wide
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 12) & 0x1
 	d.U = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0 && d.U == 0x0 && d.T == 0x0:
@@ -4784,13 +4784,13 @@ func decode_sve_sve_intx_cons_widening_sve_intx_cons_arith_wide(ins uint32, d *d
 
 func decode_sve_sve_intx_cons_widening_sve_intx_cons_mul_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cons_mul_long
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 12) & 0x1
 	d.U = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.U == 0x0 && d.T == 0x0:
@@ -4817,7 +4817,7 @@ func decode_sve_sve_intx_cons_widening_sve_intx_cons_mul_long(ins uint32, d *dec
 
 func decode_sve_sve_intx_constructive(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 23) & 0x1
-	op1 := (ins >> 13) & 0xf
+	op1 := (ins >> 10) & 0xf
 
 	switch {
 	case op0 == 0x0 && (op1&0xc) == 0x8:
@@ -4843,12 +4843,12 @@ func decode_sve_sve_intx_constructive(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_intx_constructive_sve_intx_shift_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_shift_long
 	d.tszh = (ins >> 22) & 0x1
-	d.tszl = (ins >> 20) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
+	d.tszl = (ins >> 19) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
 	d.U = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0 && d.T == 0x0:
@@ -4867,12 +4867,12 @@ func decode_sve_sve_intx_constructive_sve_intx_shift_long(ins uint32, d *decoded
 
 func decode_sve_sve_intx_constructive_sve_intx_clong(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_clong
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 11) & 0x1
 	d.tb = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0 && d.tb == 0x0:
@@ -4891,11 +4891,11 @@ func decode_sve_sve_intx_constructive_sve_intx_clong(ins uint32, d *decoded) (er
 
 func decode_sve_sve_intx_constructive_sve_intx_eorx(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_eorx
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.tb = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.tb == 0x0:
@@ -4910,10 +4910,10 @@ func decode_sve_sve_intx_constructive_sve_intx_eorx(ins uint32, d *decoded) (err
 
 func decode_sve_sve_intx_constructive_sve_intx_mmla(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_mmla
-	d.uns = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.uns = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.uns == 0x0:
@@ -4932,11 +4932,11 @@ func decode_sve_sve_intx_constructive_sve_intx_mmla(ins uint32, d *decoded) (err
 
 func decode_sve_sve_intx_constructive_sve_intx_perm_bit(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_perm_bit
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -4954,8 +4954,8 @@ func decode_sve_sve_intx_constructive_sve_intx_perm_bit(ins uint32, d *decoded) 
 }
 
 func decode_sve_sve_intx_acc(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0xf
-	op1 := (ins >> 13) & 0x7
+	op0 := (ins >> 17) & 0xf
+	op1 := (ins >> 11) & 0x7
 
 	switch {
 	case op0 == 0x0 && op1 == 0x3:
@@ -4980,11 +4980,11 @@ func decode_sve_sve_intx_acc(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_acc_sve_intx_cadd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_cadd
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 16) & 0x1
 	d.rot = (ins >> 10) & 0x1
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -4999,12 +4999,12 @@ func decode_sve_sve_intx_acc_sve_intx_cadd(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_acc_sve_intx_aba_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_aba_long
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0 && d.T == 0x0:
@@ -5023,11 +5023,11 @@ func decode_sve_sve_intx_acc_sve_intx_aba_long(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_intx_acc_sve_intx_adc_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_adc_long
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.T == 0x0:
@@ -5046,13 +5046,13 @@ func decode_sve_sve_intx_acc_sve_intx_adc_long(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_intx_acc_sve_intx_sra(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_sra
-	d.tszh = (ins >> 23) & 0x3
-	d.tszl = (ins >> 20) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
+	d.tszh = (ins >> 22) & 0x3
+	d.tszl = (ins >> 19) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
 	d.R = (ins >> 11) & 0x1
 	d.U = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.R == 0x0 && d.U == 0x0:
@@ -5071,12 +5071,12 @@ func decode_sve_sve_intx_acc_sve_intx_sra(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_acc_sve_intx_shift_insert(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_shift_insert
-	d.tszh = (ins >> 23) & 0x3
-	d.tszl = (ins >> 20) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
+	d.tszh = (ins >> 22) & 0x3
+	d.tszl = (ins >> 19) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
 	d.op = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -5091,11 +5091,11 @@ func decode_sve_sve_intx_acc_sve_intx_shift_insert(ins uint32, d *decoded) (err 
 
 func decode_sve_sve_intx_acc_sve_intx_aba(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_aba
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0:
@@ -5110,8 +5110,8 @@ func decode_sve_sve_intx_acc_sve_intx_aba(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_narrowing(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 23) & 0x1
-	op1 := (ins >> 18) & 0x7
-	op2 := (ins >> 14) & 0x3
+	op1 := (ins >> 16) & 0x7
+	op2 := (ins >> 13) & 0x3
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0 && op2 == 0x2:
@@ -5135,11 +5135,11 @@ func decode_sve_sve_intx_narrowing(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_intx_narrowing_sve_intx_extract_narrow(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_extract_narrow
 	d.tszh = (ins >> 22) & 0x1
-	d.tszl = (ins >> 20) & 0x3
-	d.opc = (ins >> 12) & 0x3
+	d.tszl = (ins >> 19) & 0x3
+	d.opc = (ins >> 11) & 0x3
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.T == 0x0:
@@ -5165,14 +5165,14 @@ func decode_sve_sve_intx_narrowing_sve_intx_extract_narrow(ins uint32, d *decode
 func decode_sve_sve_intx_narrowing_sve_intx_shift_narrow(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_shift_narrow
 	d.tszh = (ins >> 22) & 0x1
-	d.tszl = (ins >> 20) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
+	d.tszl = (ins >> 19) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
 	d.op = (ins >> 13) & 0x1
 	d.U = (ins >> 12) & 0x1
 	d.R = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && d.U == 0x0 && d.R == 0x0 && d.T == 0x0:
@@ -5215,13 +5215,13 @@ func decode_sve_sve_intx_narrowing_sve_intx_shift_narrow(ins uint32, d *decoded)
 
 func decode_sve_sve_intx_narrowing_sve_intx_arith_narrow(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_arith_narrow
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.S = (ins >> 12) & 0x1
 	d.R = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.S == 0x0 && d.R == 0x0 && d.T == 0x0:
@@ -5248,12 +5248,12 @@ func decode_sve_sve_intx_narrowing_sve_intx_arith_narrow(ins uint32, d *decoded)
 
 func decode_sve_sve_intx_match(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_match
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.op = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0:
@@ -5267,7 +5267,7 @@ func decode_sve_sve_intx_match(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_intx_histseg(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 12) & 0x7
+	op0 := (ins >> 10) & 0x7
 
 	switch {
 	case op0 == 0x0:
@@ -5282,30 +5282,30 @@ func decode_sve_sve_intx_histseg(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_histseg_sve_intx_histseg(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_histseg
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_histseg_z_zz_
 	return
 }
 
 func decode_sve_sve_intx_histcnt(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_intx_histcnt
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 	d.encoding = encoding_histcnt_z_p_zz_
 	return
 }
 
 func decode_sve_sve_intx_crypto(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x7
-	op1 := (ins >> 17) & 0x3
-	op2 := (ins >> 12) & 0x3
-	op3 := (ins >> 9) & 0x1f
+	op0 := (ins >> 18) & 0x7
+	op1 := (ins >> 16) & 0x3
+	op2 := (ins >> 11) & 0x3
+	op3 := (ins >> 5) & 0x1f
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0 && op2 == 0x0 && op3 == 0x0:
@@ -5336,9 +5336,9 @@ func decode_sve_sve_intx_crypto(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_intx_crypto_sve_crypto_unary(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_crypto_unary
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 10) & 0x1
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.op == 0x0:
@@ -5357,11 +5357,11 @@ func decode_sve_sve_intx_crypto_sve_crypto_unary(ins uint32, d *decoded) (err er
 
 func decode_sve_sve_intx_crypto_sve_crypto_binary_dest(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_crypto_binary_dest
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.op = (ins >> 16) & 0x1
 	d.o2 = (ins >> 10) & 0x1
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.op == 0x0 && d.o2 == 0x0:
@@ -5384,11 +5384,11 @@ func decode_sve_sve_intx_crypto_sve_crypto_binary_dest(ins uint32, d *decoded) (
 
 func decode_sve_sve_intx_crypto_sve_crypto_binary_const(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_crypto_binary_const
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.op == 0x0:
@@ -5407,34 +5407,34 @@ func decode_sve_sve_intx_crypto_sve_crypto_binary_const(ins uint32, d *decoded) 
 
 func decode_sve_sve_fp_fcmla(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fcmla
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.rot = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.rot = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 	d.encoding = encoding_fcmla_z_p_zzz_
 	return
 }
 
 func decode_sve_sve_fp_fcadd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fcadd
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.rot = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_fcadd_z_p_zz_
 	return
 }
 
 func decode_sve_sve_fp_fcvt2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fcvt2
-	d.opc = (ins >> 23) & 0x3
-	d.opc2 = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.opc2 = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opc&0x1) == 0x0 && d.opc2 == 0x3:
@@ -5465,11 +5465,11 @@ func decode_sve_sve_fp_fcvt2(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_pairwise(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_pairwise
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -5494,11 +5494,11 @@ func decode_sve_sve_fp_pairwise(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_fma_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fma_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
 	d.op = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.op == 0x0:
@@ -5521,11 +5521,11 @@ func decode_sve_sve_fp_fma_by_indexed_elem(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_fcmla_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fcmla_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.rot = (ins >> 11) & 0x3
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.rot = (ins >> 10) & 0x3
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -5542,10 +5542,10 @@ func decode_sve_sve_fp_fcmla_by_indexed_elem(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_fp_fmul_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fmul_by_indexed_elem
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size & 0x2) == 0x0:
@@ -5563,7 +5563,7 @@ func decode_sve_sve_fp_fmul_by_indexed_elem(ins uint32, d *decoded) (err error) 
 func decode_sve_sve_fp_fma_w_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 23) & 0x1
 	op1 := (ins >> 13) & 0x1
-	op2 := (ins >> 11) & 0x3
+	op2 := (ins >> 10) & 0x3
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0 && op2 == 0x0:
@@ -5583,10 +5583,10 @@ func decode_sve_sve_fp_fma_w_by_indexed_elem(ins uint32, d *decoded) (err error)
 func decode_sve_sve_fp_fma_w_by_indexed_elem_sve_fp_fdot_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fdot_by_indexed_elem
 	d.op = (ins >> 22) & 0x1
-	d.i2 = (ins >> 20) & 0x3
-	d.Zm = (ins >> 18) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.i2 = (ins >> 19) & 0x3
+	d.Zm = (ins >> 16) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -5602,13 +5602,13 @@ func decode_sve_sve_fp_fma_w_by_indexed_elem_sve_fp_fdot_by_indexed_elem(ins uin
 func decode_sve_sve_fp_fma_w_by_indexed_elem_sve_fp_fma_long_by_indexed_elem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fma_long_by_indexed_elem
 	d.o2 = (ins >> 22) & 0x1
-	d.i3h = (ins >> 20) & 0x3
-	d.Zm = (ins >> 18) & 0x7
+	d.i3h = (ins >> 19) & 0x3
+	d.Zm = (ins >> 16) & 0x7
 	d.op = (ins >> 13) & 0x1
 	d.i3l = (ins >> 11) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.o2 == 0x0 && d.op == 0x0 && d.T == 0x0:
@@ -5654,9 +5654,9 @@ func decode_sve_sve_fp_fma_w(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_fp_fma_w_sve_fp_fdot(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fdot
 	d.op = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -5672,11 +5672,11 @@ func decode_sve_sve_fp_fma_w_sve_fp_fdot(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_fp_fma_w_sve_fp_fma_long(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fma_long
 	d.o2 = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 13) & 0x1
 	d.T = (ins >> 10) & 0x1
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.o2 == 0x0 && d.op == 0x0 && d.T == 0x0:
@@ -5701,10 +5701,10 @@ func decode_sve_sve_fp_fma_w_sve_fp_fma_long(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_fp_fmmla(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fmmla
-	d.opc = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -5723,14 +5723,14 @@ func decode_sve_sve_fp_fmmla(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_3op_p_pd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_3op_p_pd
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.op = (ins >> 15) & 0x1
 	d.o2 = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.o3 = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.op == 0x0 && d.o2 == 0x0 && d.o3 == 0x0:
@@ -5757,11 +5757,11 @@ func decode_sve_sve_fp_3op_p_pd(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_3op_u_zd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_3op_u_zd
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -5785,9 +5785,9 @@ func decode_sve_sve_fp_3op_u_zd(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_fp_pred(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x3
-	op1 := (ins >> 12) & 0x7
-	op2 := (ins >> 9) & 0xf
+	op0 := (ins >> 19) & 0x3
+	op1 := (ins >> 10) & 0x7
+	op2 := (ins >> 6) & 0xf
 
 	switch {
 	case (op0 & 0x2) == 0x0:
@@ -5808,11 +5808,11 @@ func decode_sve_sve_fp_pred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_pred_sve_fp_2op_p_zds(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_zds
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -5853,21 +5853,21 @@ func decode_sve_sve_fp_pred_sve_fp_2op_p_zds(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_fp_pred_sve_fp_ftmad(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_ftmad
-	d.size = (ins >> 23) & 0x3
-	d.imm3 = (ins >> 18) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.imm3 = (ins >> 16) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 	d.encoding = encoding_ftmad_z_zzi_
 	return
 }
 
 func decode_sve_sve_fp_pred_sve_fp_2op_i_p_zds(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_i_p_zds
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
 	d.i1 = (ins >> 5) & 0x1
-	d.Zdn = (ins >> 4) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -5893,7 +5893,7 @@ func decode_sve_sve_fp_pred_sve_fp_2op_i_p_zds(ins uint32, d *decoded) (err erro
 }
 
 func decode_sve_sve_fp_unary(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 20) & 0x7
+	op0 := (ins >> 18) & 0x7
 
 	switch {
 	case (op0 & 0x6) == 0x0:
@@ -5914,11 +5914,11 @@ func decode_sve_sve_fp_unary(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_zd_a
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -5945,11 +5945,11 @@ func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_a(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_b_0(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_zd_b_0
-	d.opc = (ins >> 23) & 0x3
-	d.opc2 = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.opc2 = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opc&0x1) == 0x0 && d.opc2 == 0x3:
@@ -5982,11 +5982,11 @@ func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_b_0(ins uint32, d *decoded) (err er
 
 func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_b_1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_zd_b_1
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -6003,12 +6003,12 @@ func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_b_1(ins uint32, d *decoded) (err er
 
 func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_c(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_zd_c
-	d.opc = (ins >> 23) & 0x3
-	d.opc2 = (ins >> 18) & 0x3
+	d.opc = (ins >> 22) & 0x3
+	d.opc2 = (ins >> 17) & 0x3
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -6057,12 +6057,12 @@ func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_c(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_d(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_zd_d
-	d.opc = (ins >> 23) & 0x3
-	d.opc2 = (ins >> 18) & 0x3
+	d.opc = (ins >> 22) & 0x3
+	d.opc2 = (ins >> 17) & 0x3
 	d.U = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.U == 0x0:
@@ -6113,11 +6113,11 @@ func decode_sve_sve_fp_unary_sve_fp_2op_p_zd_d(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_fp_fast_red(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_fast_red
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Vd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Vd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -6141,7 +6141,7 @@ func decode_sve_sve_fp_fast_red(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_fp_unary_unpred(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 11) & 0x3
+	op0 := (ins >> 10) & 0x3
 
 	switch {
 	case op0 == 0x0:
@@ -6156,10 +6156,10 @@ func decode_sve_sve_fp_unary_unpred(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_unary_unpred_sve_fp_2op_u_zd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_u_zd
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 18) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opc & 0x4) == 0x0:
@@ -6192,13 +6192,13 @@ func decode_sve_sve_fp_cmpzero(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_cmpzero_sve_fp_2op_p_pd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_pd
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.eq = (ins >> 17) & 0x1
 	d.lt = (ins >> 16) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
 	d.ne = (ins >> 4) & 0x1
-	d.Pd = (ins >> 3) & 0xf
+	d.Pd = (ins >> 0) & 0xf
 
 	switch {
 	case d.eq == 0x0 && d.lt == 0x0 && d.ne == 0x0:
@@ -6237,11 +6237,11 @@ func decode_sve_sve_fp_slowreduce(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_slowreduce_sve_fp_2op_p_vd(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_2op_p_vd
-	d.size = (ins >> 23) & 0x3
-	d.opc = (ins >> 17) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Vdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opc = (ins >> 16) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Vdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -6272,12 +6272,12 @@ func decode_sve_sve_fp_fma(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_fp_fma_sve_fp_3op_p_zds_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_3op_p_zds_a
-	d.size = (ins >> 23) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.opc = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zda = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.opc = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zda = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -6296,12 +6296,12 @@ func decode_sve_sve_fp_fma_sve_fp_3op_p_zds_a(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_fp_fma_sve_fp_3op_p_zds_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_fp_3op_p_zds_b
-	d.size = (ins >> 23) & 0x3
-	d.Za = (ins >> 20) & 0x1f
-	d.opc = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Zm = (ins >> 9) & 0x1f
-	d.Zdn = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Za = (ins >> 16) & 0x1f
+	d.opc = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Zm = (ins >> 5) & 0x1f
+	d.Zdn = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0:
@@ -6319,9 +6319,9 @@ func decode_sve_sve_fp_fma_sve_fp_3op_p_zds_b(ins uint32, d *decoded) (err error
 }
 
 func decode_sve_sve_mem32(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 24) & 0x3
-	op1 := (ins >> 22) & 0x3
-	op2 := (ins >> 15) & 0x7
+	op0 := (ins >> 23) & 0x3
+	op1 := (ins >> 21) & 0x3
+	op2 := (ins >> 13) & 0x7
 	op3 := (ins >> 4) & 0x1
 
 	switch {
@@ -6368,11 +6368,11 @@ func decode_sve_sve_mem32(ins uint32, d *decoded) (err error) {
 func decode_sve_sve_mem32_sve_mem_32b_prfm_sv(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_prfm_sv
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
-	d.msz = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.Zm = (ins >> 16) & 0x1f
+	d.msz = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -6392,12 +6392,12 @@ func decode_sve_sve_mem32_sve_mem_32b_prfm_sv(ins uint32, d *decoded) (err error
 func decode_sve_sve_mem32_sve_mem_32b_gld_sv_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_gld_sv_a
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0 && d.ff == 0x0:
@@ -6417,12 +6417,12 @@ func decode_sve_sve_mem32_sve_mem_32b_gld_sv_a(ins uint32, d *decoded) (err erro
 func decode_sve_sve_mem32_sve_mem_32b_gld_sv_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_gld_sv_b
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0:
@@ -6439,31 +6439,31 @@ func decode_sve_sve_mem32_sve_mem_32b_gld_sv_b(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_mem32_sve_mem_32b_pfill(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_pfill
-	d.imm9h = (ins >> 21) & 0x3f
-	d.imm9l = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Pt = (ins >> 3) & 0xf
+	d.imm9h = (ins >> 16) & 0x3f
+	d.imm9l = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Pt = (ins >> 0) & 0xf
 	d.encoding = encoding_ldr_p_bi_
 	return
 }
 
 func decode_sve_sve_mem32_sve_mem_32b_fill(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_fill
-	d.imm9h = (ins >> 21) & 0x3f
-	d.imm9l = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.imm9h = (ins >> 16) & 0x3f
+	d.imm9l = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 	d.encoding = encoding_ldr_z_bi_
 	return
 }
 
 func decode_sve_sve_mem32_sve_mem_prfm_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_prfm_si
-	d.imm6 = (ins >> 21) & 0x3f
-	d.msz = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.imm6 = (ins >> 16) & 0x3f
+	d.msz = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -6482,14 +6482,14 @@ func decode_sve_sve_mem32_sve_mem_prfm_si(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_mem32_sve_mem_32b_gld_vs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_gld_vs
-	d.opc = (ins >> 24) & 0x3
+	d.opc = (ins >> 23) & 0x3
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.U == 0x0 && d.ff == 0x0:
@@ -6522,12 +6522,12 @@ func decode_sve_sve_mem32_sve_mem_32b_gld_vs(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_mem32_sve_mem_32b_gldnt_vs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_gldnt_vs
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
 	d.U = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.U == 0x0:
@@ -6552,11 +6552,11 @@ func decode_sve_sve_mem32_sve_mem_32b_gldnt_vs(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_mem32_sve_mem_prfm_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_prfm_ss
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -6575,11 +6575,11 @@ func decode_sve_sve_mem32_sve_mem_prfm_ss(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_mem32_sve_mem_32b_prfm_vi(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_prfm_vi
-	d.msz = (ins >> 24) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.msz = (ins >> 23) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -6598,13 +6598,13 @@ func decode_sve_sve_mem32_sve_mem_32b_prfm_vi(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_mem32_sve_mem_32b_gld_vi(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_32b_gld_vi
-	d.msz = (ins >> 24) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.U == 0x0 && d.ff == 0x0:
@@ -6639,12 +6639,12 @@ func decode_sve_sve_mem32_sve_mem_32b_gld_vi(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_mem32_sve_mem_ld_dup(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_ld_dup
-	d.dtypeh = (ins >> 24) & 0x3
-	d.imm6 = (ins >> 21) & 0x3f
-	d.dtypel = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.dtypeh = (ins >> 23) & 0x3
+	d.imm6 = (ins >> 16) & 0x3f
+	d.dtypel = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.dtypeh == 0x0 && d.dtypel == 0x0:
@@ -6686,9 +6686,9 @@ func decode_sve_sve_mem32_sve_mem_ld_dup(ins uint32, d *decoded) (err error) {
 }
 
 func decode_sve_sve_memcld(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 22) & 0x3
+	op0 := (ins >> 21) & 0x3
 	op1 := (ins >> 20) & 0x1
-	op2 := (ins >> 15) & 0x7
+	op2 := (ins >> 13) & 0x7
 
 	switch {
 	case op0 == 0x0 && op1 == 0x0 && op2 == 0x7:
@@ -6725,11 +6725,11 @@ func decode_sve_sve_memcld(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_cldnt_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cldnt_si
-	d.msz = (ins >> 24) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -6748,11 +6748,11 @@ func decode_sve_sve_memcld_sve_mem_cldnt_si(ins uint32, d *decoded) (err error) 
 
 func decode_sve_sve_memcld_sve_mem_cldnt_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cldnt_ss
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -6771,12 +6771,12 @@ func decode_sve_sve_memcld_sve_mem_cldnt_ss(ins uint32, d *decoded) (err error) 
 
 func decode_sve_sve_memcld_sve_mem_eld_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_eld_si
-	d.msz = (ins >> 24) & 0x3
-	d.opc = (ins >> 22) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.opc = (ins >> 21) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.opc == 0x1:
@@ -6811,12 +6811,12 @@ func decode_sve_sve_memcld_sve_mem_eld_si(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_eld_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_eld_ss
-	d.msz = (ins >> 24) & 0x3
-	d.opc = (ins >> 22) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.opc = (ins >> 21) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.opc == 0x1:
@@ -6851,12 +6851,12 @@ func decode_sve_sve_memcld_sve_mem_eld_ss(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_ldqr_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_ldqr_si
-	d.msz = (ins >> 24) & 0x3
-	d.ssz = (ins >> 22) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.ssz = (ins >> 21) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.ssz & 0x2) == 0x2:
@@ -6885,11 +6885,11 @@ func decode_sve_sve_memcld_sve_mem_ldqr_si(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_cld_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cld_si
-	d.dtype = (ins >> 24) & 0xf
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.dtype = (ins >> 21) & 0xf
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.dtype == 0x0:
@@ -6932,11 +6932,11 @@ func decode_sve_sve_memcld_sve_mem_cld_si(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_cldnf_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cldnf_si
-	d.dtype = (ins >> 24) & 0xf
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.dtype = (ins >> 21) & 0xf
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.dtype == 0x0:
@@ -6979,12 +6979,12 @@ func decode_sve_sve_memcld_sve_mem_cldnf_si(ins uint32, d *decoded) (err error) 
 
 func decode_sve_sve_memcld_sve_mem_ldqr_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_ldqr_ss
-	d.msz = (ins >> 24) & 0x3
-	d.ssz = (ins >> 22) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.ssz = (ins >> 21) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.ssz & 0x2) == 0x2:
@@ -7013,11 +7013,11 @@ func decode_sve_sve_memcld_sve_mem_ldqr_ss(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_cld_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cld_ss
-	d.dtype = (ins >> 24) & 0xf
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.dtype = (ins >> 21) & 0xf
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.dtype == 0x0:
@@ -7060,11 +7060,11 @@ func decode_sve_sve_memcld_sve_mem_cld_ss(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memcld_sve_mem_cldff_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cldff_ss
-	d.dtype = (ins >> 24) & 0xf
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.dtype = (ins >> 21) & 0xf
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.dtype == 0x0:
@@ -7106,9 +7106,9 @@ func decode_sve_sve_memcld_sve_mem_cldff_ss(ins uint32, d *decoded) (err error) 
 }
 
 func decode_sve_sve_mem64(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 24) & 0x3
-	op1 := (ins >> 22) & 0x3
-	op2 := (ins >> 15) & 0x7
+	op0 := (ins >> 23) & 0x3
+	op1 := (ins >> 21) & 0x3
+	op2 := (ins >> 13) & 0x7
 	op3 := (ins >> 4) & 0x1
 
 	switch {
@@ -7146,11 +7146,11 @@ func decode_sve_sve_mem64(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_mem64_sve_mem_64b_prfm_sv2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_prfm_sv2
-	d.Zm = (ins >> 20) & 0x1f
-	d.msz = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.Zm = (ins >> 16) & 0x1f
+	d.msz = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -7170,11 +7170,11 @@ func decode_sve_sve_mem64_sve_mem_64b_prfm_sv2(ins uint32, d *decoded) (err erro
 func decode_sve_sve_mem64_sve_mem_64b_prfm_sv(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_prfm_sv
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
-	d.msz = (ins >> 14) & 0x3
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.Zm = (ins >> 16) & 0x1f
+	d.msz = (ins >> 13) & 0x3
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -7193,13 +7193,13 @@ func decode_sve_sve_mem64_sve_mem_64b_prfm_sv(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_mem64_sve_mem_64b_gld_sv2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_gld_sv2
-	d.opc = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.opc = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x1 && d.U == 0x0 && d.ff == 0x0:
@@ -7232,14 +7232,14 @@ func decode_sve_sve_mem64_sve_mem_64b_gld_sv2(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_mem64_sve_mem_64b_gld_sv(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_gld_sv
-	d.opc = (ins >> 24) & 0x3
+	d.opc = (ins >> 23) & 0x3
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x1 && d.U == 0x0 && d.ff == 0x0:
@@ -7272,11 +7272,11 @@ func decode_sve_sve_mem64_sve_mem_64b_gld_sv(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_mem64_sve_mem_64b_prfm_vi(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_prfm_vi
-	d.msz = (ins >> 24) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.prfop = (ins >> 3) & 0xf
+	d.msz = (ins >> 23) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.prfop = (ins >> 0) & 0xf
 
 	switch {
 	case d.msz == 0x0:
@@ -7295,12 +7295,12 @@ func decode_sve_sve_mem64_sve_mem_64b_prfm_vi(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_mem64_sve_mem_64b_gldnt_vs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_gldnt_vs
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.U == 0x0:
@@ -7327,13 +7327,13 @@ func decode_sve_sve_mem64_sve_mem_64b_gldnt_vs(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_mem64_sve_mem_64b_gld_vi(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_gld_vi
-	d.msz = (ins >> 24) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.U == 0x0 && d.ff == 0x0:
@@ -7374,13 +7374,13 @@ func decode_sve_sve_mem64_sve_mem_64b_gld_vi(ins uint32, d *decoded) (err error)
 
 func decode_sve_sve_mem64_sve_mem_64b_gld_vs2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_gld_vs2
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.U == 0x0 && d.ff == 0x0:
@@ -7421,14 +7421,14 @@ func decode_sve_sve_mem64_sve_mem_64b_gld_vs2(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_mem64_sve_mem_64b_gld_vs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_64b_gld_vs
-	d.msz = (ins >> 24) & 0x3
+	d.msz = (ins >> 23) & 0x3
 	d.xs = (ins >> 22) & 0x1
-	d.Zm = (ins >> 20) & 0x1f
+	d.Zm = (ins >> 16) & 0x1f
 	d.U = (ins >> 14) & 0x1
 	d.ff = (ins >> 13) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.U == 0x0 && d.ff == 0x0:
@@ -7468,7 +7468,7 @@ func decode_sve_sve_mem64_sve_mem_64b_gld_vs(ins uint32, d *decoded) (err error)
 }
 
 func decode_sve_sve_memst_cs(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 24) & 0x7
+	op0 := (ins >> 22) & 0x7
 	op1 := (ins >> 14) & 0x1
 	op2 := (ins >> 4) & 0x1
 
@@ -7495,32 +7495,32 @@ func decode_sve_sve_memst_cs(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memst_cs_sve_mem_pspill(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_pspill
-	d.imm9h = (ins >> 21) & 0x3f
-	d.imm9l = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Pt = (ins >> 3) & 0xf
+	d.imm9h = (ins >> 16) & 0x3f
+	d.imm9l = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Pt = (ins >> 0) & 0xf
 	d.encoding = encoding_str_p_bi_
 	return
 }
 
 func decode_sve_sve_memst_cs_sve_mem_spill(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_spill
-	d.imm9h = (ins >> 21) & 0x3f
-	d.imm9l = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.imm9h = (ins >> 16) & 0x3f
+	d.imm9l = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 	d.encoding = encoding_str_z_bi_
 	return
 }
 
 func decode_sve_sve_memst_cs_sve_mem_cst_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cst_ss
-	d.opc = (ins >> 24) & 0x7
+	d.opc = (ins >> 22) & 0x7
 	d.o2 = (ins >> 21) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opc & 0x6) == 0x0:
@@ -7540,7 +7540,7 @@ func decode_sve_sve_memst_cs_sve_mem_cst_ss(ins uint32, d *decoded) (err error) 
 }
 
 func decode_sve_sve_memst_nt(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 22) & 0x3
+	op0 := (ins >> 21) & 0x3
 	op1 := (ins >> 14) & 0x1
 
 	switch {
@@ -7562,11 +7562,11 @@ func decode_sve_sve_memst_nt(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memst_nt_sve_mem_sstnt_64b_vs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sstnt_64b_vs
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7585,11 +7585,11 @@ func decode_sve_sve_memst_nt_sve_mem_sstnt_64b_vs(ins uint32, d *decoded) (err e
 
 func decode_sve_sve_memst_nt_sve_mem_cstnt_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cstnt_ss
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7608,11 +7608,11 @@ func decode_sve_sve_memst_nt_sve_mem_cstnt_ss(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_nt_sve_mem_sstnt_32b_vs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sstnt_32b_vs
-	d.msz = (ins >> 24) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7631,12 +7631,12 @@ func decode_sve_sve_memst_nt_sve_mem_sstnt_32b_vs(ins uint32, d *decoded) (err e
 
 func decode_sve_sve_memst_nt_sve_mem_est_ss(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_est_ss
-	d.msz = (ins >> 24) & 0x3
-	d.opc = (ins >> 22) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.opc = (ins >> 21) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.opc == 0x1:
@@ -7670,7 +7670,7 @@ func decode_sve_sve_memst_nt_sve_mem_est_ss(ins uint32, d *decoded) (err error) 
 }
 
 func decode_sve_sve_memst_ss(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 22) & 0x3
+	op0 := (ins >> 21) & 0x3
 
 	switch {
 	case op0 == 0x0:
@@ -7689,12 +7689,12 @@ func decode_sve_sve_memst_ss(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memst_ss_sve_mem_sst_vs_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_vs_a
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.xs = (ins >> 14) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7713,12 +7713,12 @@ func decode_sve_sve_memst_ss_sve_mem_sst_vs_a(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_ss_sve_mem_sst_sv_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_sv_a
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.xs = (ins >> 14) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7737,12 +7737,12 @@ func decode_sve_sve_memst_ss_sve_mem_sst_sv_a(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_ss_sve_mem_sst_vs_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_vs_b
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.xs = (ins >> 14) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7761,12 +7761,12 @@ func decode_sve_sve_memst_ss_sve_mem_sst_vs_b(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_ss_sve_mem_sst_sv_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_sv_b
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
 	d.xs = (ins >> 14) & 0x1
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7784,7 +7784,7 @@ func decode_sve_sve_memst_ss_sve_mem_sst_sv_b(ins uint32, d *decoded) (err error
 }
 
 func decode_sve_sve_memst_ss2(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 22) & 0x3
+	op0 := (ins >> 21) & 0x3
 
 	switch {
 	case op0 == 0x0:
@@ -7803,11 +7803,11 @@ func decode_sve_sve_memst_ss2(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memst_ss2_sve_mem_sst_vs2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_vs2
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7826,11 +7826,11 @@ func decode_sve_sve_memst_ss2_sve_mem_sst_vs2(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_ss2_sve_mem_sst_sv2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_sv2
-	d.msz = (ins >> 24) & 0x3
-	d.Zm = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.Zm = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7849,11 +7849,11 @@ func decode_sve_sve_memst_ss2_sve_mem_sst_sv2(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_ss2_sve_mem_sst_vi_a(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_vi_a
-	d.msz = (ins >> 24) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7872,11 +7872,11 @@ func decode_sve_sve_memst_ss2_sve_mem_sst_vi_a(ins uint32, d *decoded) (err erro
 
 func decode_sve_sve_memst_ss2_sve_mem_sst_vi_b(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_sst_vi_b
-	d.msz = (ins >> 24) & 0x3
-	d.imm5 = (ins >> 20) & 0x1f
-	d.Pg = (ins >> 12) & 0x7
-	d.Zn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.imm5 = (ins >> 16) & 0x1f
+	d.Pg = (ins >> 10) & 0x7
+	d.Zn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7894,7 +7894,7 @@ func decode_sve_sve_memst_ss2_sve_mem_sst_vi_b(ins uint32, d *decoded) (err erro
 }
 
 func decode_sve_sve_memst_si(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 22) & 0x3
+	op0 := (ins >> 21) & 0x3
 	op1 := (ins >> 20) & 0x1
 
 	switch {
@@ -7912,11 +7912,11 @@ func decode_sve_sve_memst_si(ins uint32, d *decoded) (err error) {
 
 func decode_sve_sve_memst_si_sve_mem_cstnt_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cstnt_si
-	d.msz = (ins >> 24) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7935,12 +7935,12 @@ func decode_sve_sve_memst_si_sve_mem_cstnt_si(ins uint32, d *decoded) (err error
 
 func decode_sve_sve_memst_si_sve_mem_est_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_est_si
-	d.msz = (ins >> 24) & 0x3
-	d.opc = (ins >> 22) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.opc = (ins >> 21) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0 && d.opc == 0x1:
@@ -7975,12 +7975,12 @@ func decode_sve_sve_memst_si_sve_mem_est_si(ins uint32, d *decoded) (err error) 
 
 func decode_sve_sve_memst_si_sve_mem_cst_si(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_sve_mem_cst_si
-	d.msz = (ins >> 24) & 0x3
-	d.size = (ins >> 22) & 0x3
-	d.imm4 = (ins >> 19) & 0xf
-	d.Pg = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Zt = (ins >> 4) & 0x1f
+	d.msz = (ins >> 23) & 0x3
+	d.size = (ins >> 21) & 0x3
+	d.imm4 = (ins >> 16) & 0xf
+	d.Pg = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Zt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.msz == 0x0:
@@ -7998,7 +7998,7 @@ func decode_sve_sve_memst_si_sve_mem_cst_si(ins uint32, d *decoded) (err error) 
 }
 
 func decode_dpimm(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 25) & 0x7
+	op0 := (ins >> 23) & 0x7
 
 	switch {
 	case (op0 & 0x6) == 0x0:
@@ -8024,9 +8024,9 @@ func decode_dpimm(ins uint32, d *decoded) (err error) {
 func decode_dpimm_pcreladdr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_pcreladdr
 	d.op = (ins >> 31) & 0x1
-	d.immlo = (ins >> 30) & 0x3
-	d.immhi = (ins >> 23) & 0x7ffff
-	d.Rd = (ins >> 4) & 0x1f
+	d.immlo = (ins >> 29) & 0x3
+	d.immhi = (ins >> 5) & 0x7ffff
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -8045,9 +8045,9 @@ func decode_dpimm_addsub_imm(ins uint32, d *decoded) (err error) {
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
 	d.sh = (ins >> 22) & 0x1
-	d.imm12 = (ins >> 21) & 0xfff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.imm12 = (ins >> 10) & 0xfff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.sf == 0x0 && d.op == 0x0 && d.S == 0x0:
@@ -8078,11 +8078,11 @@ func decode_dpimm_addsub_immtags(ins uint32, d *decoded) (err error) {
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
 	d.o2 = (ins >> 22) & 0x1
-	d.uimm6 = (ins >> 21) & 0x3f
-	d.op3 = (ins >> 15) & 0x3
-	d.uimm4 = (ins >> 13) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.uimm6 = (ins >> 16) & 0x3f
+	d.op3 = (ins >> 14) & 0x3
+	d.uimm4 = (ins >> 10) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.o2 == 0x1:
@@ -8104,12 +8104,12 @@ func decode_dpimm_addsub_immtags(ins uint32, d *decoded) (err error) {
 func decode_dpimm_log_imm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_log_imm
 	d.sf = (ins >> 31) & 0x1
-	d.opc = (ins >> 30) & 0x3
+	d.opc = (ins >> 29) & 0x3
 	d.N = (ins >> 22) & 0x1
-	d.immr = (ins >> 21) & 0x3f
-	d.imms = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.immr = (ins >> 16) & 0x3f
+	d.imms = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.sf == 0x0 && d.N == 0x1:
@@ -8139,10 +8139,10 @@ func decode_dpimm_log_imm(ins uint32, d *decoded) (err error) {
 func decode_dpimm_movewide(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_movewide
 	d.sf = (ins >> 31) & 0x1
-	d.opc = (ins >> 30) & 0x3
-	d.hw = (ins >> 22) & 0x3
-	d.imm16 = (ins >> 20) & 0xffff
-	d.Rd = (ins >> 4) & 0x1f
+	d.opc = (ins >> 29) & 0x3
+	d.hw = (ins >> 21) & 0x3
+	d.imm16 = (ins >> 5) & 0xffff
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x1:
@@ -8170,12 +8170,12 @@ func decode_dpimm_movewide(ins uint32, d *decoded) (err error) {
 func decode_dpimm_bitfield(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_bitfield
 	d.sf = (ins >> 31) & 0x1
-	d.opc = (ins >> 30) & 0x3
+	d.opc = (ins >> 29) & 0x3
 	d.N = (ins >> 22) & 0x1
-	d.immr = (ins >> 21) & 0x3f
-	d.imms = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.immr = (ins >> 16) & 0x3f
+	d.imms = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x3:
@@ -8205,13 +8205,13 @@ func decode_dpimm_bitfield(ins uint32, d *decoded) (err error) {
 func decode_dpimm_extract(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_extract
 	d.sf = (ins >> 31) & 0x1
-	d.op21 = (ins >> 30) & 0x3
+	d.op21 = (ins >> 29) & 0x3
 	d.N = (ins >> 22) & 0x1
 	d.o0 = (ins >> 21) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.imms = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.imms = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.op21 & 0x1) == 0x1:
@@ -8237,9 +8237,9 @@ func decode_dpimm_extract(ins uint32, d *decoded) (err error) {
 }
 
 func decode_control(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 31) & 0x7
-	op1 := (ins >> 25) & 0x3fff
-	op2 := (ins >> 4) & 0x1f
+	op0 := (ins >> 29) & 0x7
+	op1 := (ins >> 12) & 0x3fff
+	op2 := (ins >> 0) & 0x1f
 
 	switch {
 	case op0 == 0x2 && (op1&0x2000) == 0x0:
@@ -8277,9 +8277,9 @@ func decode_control(ins uint32, d *decoded) (err error) {
 func decode_control_condbranch(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_condbranch
 	d.o1 = (ins >> 24) & 0x1
-	d.imm19 = (ins >> 23) & 0x7ffff
+	d.imm19 = (ins >> 5) & 0x7ffff
 	d.o0 = (ins >> 4) & 0x1
-	d.cond = (ins >> 3) & 0xf
+	d.cond = (ins >> 0) & 0xf
 
 	switch {
 	case d.o1 == 0x0 && d.o0 == 0x0:
@@ -8296,10 +8296,10 @@ func decode_control_condbranch(ins uint32, d *decoded) (err error) {
 
 func decode_control_exception(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_exception
-	d.opc = (ins >> 23) & 0x7
-	d.imm16 = (ins >> 20) & 0xffff
-	d.op2 = (ins >> 4) & 0x7
-	d.LL = (ins >> 1) & 0x3
+	d.opc = (ins >> 21) & 0x7
+	d.imm16 = (ins >> 5) & 0xffff
+	d.op2 = (ins >> 2) & 0x7
+	d.LL = (ins >> 0) & 0x3
 
 	switch {
 	case d.op2 == 0x1:
@@ -8356,9 +8356,9 @@ func decode_control_exception(ins uint32, d *decoded) (err error) {
 
 func decode_control_systeminstrswithreg(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_systeminstrswithreg
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
-	d.Rt = (ins >> 4) & 0x1f
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.CRm != 0x0:
@@ -8379,8 +8379,8 @@ func decode_control_systeminstrswithreg(ins uint32, d *decoded) (err error) {
 
 func decode_control_hints(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_hints
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
 
 	switch {
 	case d.CRm == 0x0 && d.op2 == 0x0:
@@ -8441,9 +8441,9 @@ func decode_control_hints(ins uint32, d *decoded) (err error) {
 
 func decode_control_barriers(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_barriers
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
-	d.Rt = (ins >> 4) & 0x1f
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op2 == 0x0:
@@ -8486,10 +8486,10 @@ func decode_control_barriers(ins uint32, d *decoded) (err error) {
 
 func decode_control_pstate(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_pstate
-	d.op1 = (ins >> 18) & 0x7
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
-	d.Rt = (ins >> 4) & 0x1f
+	d.op1 = (ins >> 16) & 0x7
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.Rt != 0x1f:
@@ -8510,11 +8510,11 @@ func decode_control_pstate(ins uint32, d *decoded) (err error) {
 
 func decode_control_systemresult(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_systemresult
-	d.op1 = (ins >> 18) & 0x7
-	d.CRn = (ins >> 15) & 0xf
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
-	d.Rt = (ins >> 4) & 0x1f
+	d.op1 = (ins >> 16) & 0x7
+	d.CRn = (ins >> 12) & 0xf
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op1 != 0x3:
@@ -8538,11 +8538,11 @@ func decode_control_systemresult(ins uint32, d *decoded) (err error) {
 func decode_control_systeminstrs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_systeminstrs
 	d.L = (ins >> 21) & 0x1
-	d.op1 = (ins >> 18) & 0x7
-	d.CRn = (ins >> 15) & 0xf
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
-	d.Rt = (ins >> 4) & 0x1f
+	d.op1 = (ins >> 16) & 0x7
+	d.CRn = (ins >> 12) & 0xf
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x0:
@@ -8559,11 +8559,11 @@ func decode_control_systemmove(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_systemmove
 	d.L = (ins >> 21) & 0x1
 	d.o0 = (ins >> 19) & 0x1
-	d.op1 = (ins >> 18) & 0x7
-	d.CRn = (ins >> 15) & 0xf
-	d.CRm = (ins >> 11) & 0xf
-	d.op2 = (ins >> 7) & 0x7
-	d.Rt = (ins >> 4) & 0x1f
+	d.op1 = (ins >> 16) & 0x7
+	d.CRn = (ins >> 12) & 0xf
+	d.CRm = (ins >> 8) & 0xf
+	d.op2 = (ins >> 5) & 0x7
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x0:
@@ -8578,11 +8578,11 @@ func decode_control_systemmove(ins uint32, d *decoded) (err error) {
 
 func decode_control_branch_reg(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_branch_reg
-	d.opc = (ins >> 24) & 0xf
-	d.op2 = (ins >> 20) & 0x1f
-	d.op3 = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.op4 = (ins >> 4) & 0x1f
+	d.opc = (ins >> 21) & 0xf
+	d.op2 = (ins >> 16) & 0x1f
+	d.op3 = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.op4 = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op2 != 0x1f:
@@ -8742,7 +8742,7 @@ func decode_control_branch_reg(ins uint32, d *decoded) (err error) {
 func decode_control_branch_imm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_branch_imm
 	d.op = (ins >> 31) & 0x1
-	d.imm26 = (ins >> 25) & 0x3ffffff
+	d.imm26 = (ins >> 0) & 0x3ffffff
 
 	switch {
 	case d.op == 0x0:
@@ -8759,8 +8759,8 @@ func decode_control_compbranch(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_compbranch
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 24) & 0x1
-	d.imm19 = (ins >> 23) & 0x7ffff
-	d.Rt = (ins >> 4) & 0x1f
+	d.imm19 = (ins >> 5) & 0x7ffff
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.sf == 0x0 && d.op == 0x0:
@@ -8781,9 +8781,9 @@ func decode_control_testbranch(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_testbranch
 	d.b5 = (ins >> 31) & 0x1
 	d.op = (ins >> 24) & 0x1
-	d.b40 = (ins >> 23) & 0x1f
-	d.imm14 = (ins >> 18) & 0x3fff
-	d.Rt = (ins >> 4) & 0x1f
+	d.b40 = (ins >> 19) & 0x1f
+	d.imm14 = (ins >> 5) & 0x3fff
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0:
@@ -8797,11 +8797,11 @@ func decode_control_testbranch(ins uint32, d *decoded) (err error) {
 }
 
 func decode_ldst(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 31) & 0xf
+	op0 := (ins >> 28) & 0xf
 	op1 := (ins >> 26) & 0x1
-	op2 := (ins >> 24) & 0x3
-	op3 := (ins >> 21) & 0x3f
-	op4 := (ins >> 11) & 0x3
+	op2 := (ins >> 23) & 0x3
+	op3 := (ins >> 16) & 0x3f
+	op4 := (ins >> 10) & 0x3
 
 	switch {
 	case (op0&0xb) == 0x0 && op1 == 0x0 && op2 == 0x0 && (op3&0x20) == 0x20:
@@ -8878,11 +8878,11 @@ func decode_ldst_comswappr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_comswappr
 	d.sz = (ins >> 30) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.Rs = (ins >> 20) & 0x1f
+	d.Rs = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.Rt2 != 0x1f:
@@ -8913,10 +8913,10 @@ func decode_ldst_asisdlse(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdlse
 	d.Q = (ins >> 30) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.opcode = (ins >> 15) & 0xf
-	d.size = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opcode = (ins >> 12) & 0xf
+	d.size = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x0 && d.opcode == 0x0:
@@ -8981,11 +8981,11 @@ func decode_ldst_asisdlsep(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdlsep
 	d.Q = (ins >> 30) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0xf
-	d.size = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 12) & 0xf
+	d.size = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x0 && d.opcode == 0x1:
@@ -9079,11 +9079,11 @@ func decode_ldst_asisdlso(ins uint32, d *decoded) (err error) {
 	d.Q = (ins >> 30) & 0x1
 	d.L = (ins >> 22) & 0x1
 	d.R = (ins >> 21) & 0x1
-	d.opcode = (ins >> 15) & 0x7
+	d.opcode = (ins >> 13) & 0x7
 	d.S = (ins >> 12) & 0x1
-	d.size = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.size = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x0 && (d.opcode&0x6) == 0x6:
@@ -9239,12 +9239,12 @@ func decode_ldst_asisdlsop(ins uint32, d *decoded) (err error) {
 	d.Q = (ins >> 30) & 0x1
 	d.L = (ins >> 22) & 0x1
 	d.R = (ins >> 21) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0x7
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 13) & 0x7
 	d.S = (ins >> 12) & 0x1
-	d.size = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.size = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.L == 0x0 && (d.opcode&0x6) == 0x6:
@@ -9469,11 +9469,11 @@ func decode_ldst_asisdlsop(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldsttags(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldsttags
-	d.opc = (ins >> 23) & 0x3
-	d.imm9 = (ins >> 20) & 0x1ff
-	d.op2 = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm9 = (ins >> 12) & 0x1ff
+	d.op2 = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.op2 == 0x1:
@@ -9522,11 +9522,11 @@ func decode_ldst_ldstexclp(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstexclp
 	d.sz = (ins >> 30) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.Rs = (ins >> 20) & 0x1f
+	d.Rs = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.sz == 0x0 && d.L == 0x0 && d.o0 == 0x0:
@@ -9553,13 +9553,13 @@ func decode_ldst_ldstexclp(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldstexclr(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstexclr
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.L = (ins >> 22) & 0x1
-	d.Rs = (ins >> 20) & 0x1f
+	d.Rs = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.L == 0x0 && d.o0 == 0x0:
@@ -9602,13 +9602,13 @@ func decode_ldst_ldstexclr(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldstord(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstord
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.L = (ins >> 22) & 0x1
-	d.Rs = (ins >> 20) & 0x1f
+	d.Rs = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.L == 0x0 && d.o0 == 0x0:
@@ -9651,13 +9651,13 @@ func decode_ldst_ldstord(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_comswap(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_comswap
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.L = (ins >> 22) & 0x1
-	d.Rs = (ins >> 20) & 0x1f
+	d.Rs = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.Rt2 != 0x1f:
@@ -9702,11 +9702,11 @@ func decode_ldst_comswap(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldapstl_unscaled(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldapstl_unscaled
-	d.size = (ins >> 31) & 0x3
-	d.opc = (ins >> 23) & 0x3
-	d.imm9 = (ins >> 20) & 0x1ff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.size = (ins >> 30) & 0x3
+	d.opc = (ins >> 22) & 0x3
+	d.imm9 = (ins >> 12) & 0x1ff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x0 && d.opc == 0x0:
@@ -9749,10 +9749,10 @@ func decode_ldst_ldapstl_unscaled(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_loadlit(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_loadlit
-	d.opc = (ins >> 31) & 0x3
+	d.opc = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.imm19 = (ins >> 23) & 0x7ffff
-	d.Rt = (ins >> 4) & 0x1f
+	d.imm19 = (ins >> 5) & 0x7ffff
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.V == 0x0:
@@ -9779,13 +9779,13 @@ func decode_ldst_loadlit(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_memcms(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_memcms
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.o0 = (ins >> 26) & 0x1
-	d.op1 = (ins >> 23) & 0x3
-	d.Rs = (ins >> 20) & 0x1f
-	d.op2 = (ins >> 15) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.op1 = (ins >> 22) & 0x3
+	d.Rs = (ins >> 16) & 0x1f
+	d.op2 = (ins >> 12) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.o0 == 0x0 && d.op1 == 0x0 && d.op2 == 0x0:
@@ -10040,13 +10040,13 @@ func decode_ldst_memcms(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldstnapair_offs(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstnapair_offs
-	d.opc = (ins >> 31) & 0x3
+	d.opc = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.imm7 = (ins >> 21) & 0x7f
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.imm7 = (ins >> 15) & 0x7f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.V == 0x0 && d.L == 0x0:
@@ -10081,13 +10081,13 @@ func decode_ldst_ldstnapair_offs(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldstpair_post(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstpair_post
-	d.opc = (ins >> 31) & 0x3
+	d.opc = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.imm7 = (ins >> 21) & 0x7f
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.imm7 = (ins >> 15) & 0x7f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.V == 0x0 && d.L == 0x0:
@@ -10124,13 +10124,13 @@ func decode_ldst_ldstpair_post(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldstpair_off(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstpair_off
-	d.opc = (ins >> 31) & 0x3
+	d.opc = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.imm7 = (ins >> 21) & 0x7f
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.imm7 = (ins >> 15) & 0x7f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.V == 0x0 && d.L == 0x0:
@@ -10167,13 +10167,13 @@ func decode_ldst_ldstpair_off(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldstpair_pre(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldstpair_pre
-	d.opc = (ins >> 31) & 0x3
+	d.opc = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
 	d.L = (ins >> 22) & 0x1
-	d.imm7 = (ins >> 21) & 0x7f
-	d.Rt2 = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.imm7 = (ins >> 15) & 0x7f
+	d.Rt2 = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opc == 0x0 && d.V == 0x0 && d.L == 0x0:
@@ -10210,12 +10210,12 @@ func decode_ldst_ldstpair_pre(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_unscaled(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_unscaled
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.opc = (ins >> 23) & 0x3
-	d.imm9 = (ins >> 20) & 0x1ff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm9 = (ins >> 12) & 0x1ff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x1) == 0x1 && d.V == 0x1 && (d.opc&0x2) == 0x2:
@@ -10280,12 +10280,12 @@ func decode_ldst_ldst_unscaled(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_immpost(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_immpost
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.opc = (ins >> 23) & 0x3
-	d.imm9 = (ins >> 20) & 0x1ff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm9 = (ins >> 12) & 0x1ff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x1) == 0x1 && d.V == 0x1 && (d.opc&0x2) == 0x2:
@@ -10350,12 +10350,12 @@ func decode_ldst_ldst_immpost(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_unpriv(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_unpriv
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.opc = (ins >> 23) & 0x3
-	d.imm9 = (ins >> 20) & 0x1ff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm9 = (ins >> 12) & 0x1ff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.V == 0x1:
@@ -10398,12 +10398,12 @@ func decode_ldst_ldst_unpriv(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_immpre(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_immpre
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.opc = (ins >> 23) & 0x3
-	d.imm9 = (ins >> 20) & 0x1ff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm9 = (ins >> 12) & 0x1ff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x1) == 0x1 && d.V == 0x1 && (d.opc&0x2) == 0x2:
@@ -10468,15 +10468,15 @@ func decode_ldst_ldst_immpre(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_memop(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_memop
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
 	d.A = (ins >> 23) & 0x1
 	d.R = (ins >> 22) & 0x1
-	d.Rs = (ins >> 20) & 0x1f
+	d.Rs = (ins >> 16) & 0x1f
 	d.o3 = (ins >> 15) & 0x1
-	d.opc = (ins >> 14) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 12) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.V == 0x0 && d.o3 == 0x1 && (d.opc&0x6) == 0x6:
@@ -10847,14 +10847,14 @@ func decode_ldst_memop(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_regoff(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_regoff
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.opc = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.option = (ins >> 15) & 0x7
+	d.opc = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.option = (ins >> 13) & 0x7
 	d.S = (ins >> 12) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x1) == 0x1 && d.V == 0x1 && (d.opc&0x2) == 0x2:
@@ -10931,14 +10931,14 @@ func decode_ldst_ldst_regoff(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_pac(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_pac
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
 	d.M = (ins >> 23) & 0x1
 	d.S = (ins >> 22) & 0x1
-	d.imm9 = (ins >> 20) & 0x1ff
+	d.imm9 = (ins >> 12) & 0x1ff
 	d.W = (ins >> 11) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size != 0x3:
@@ -10961,12 +10961,12 @@ func decode_ldst_ldst_pac(ins uint32, d *decoded) (err error) {
 
 func decode_ldst_ldst_pos(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_ldst_pos
-	d.size = (ins >> 31) & 0x3
+	d.size = (ins >> 30) & 0x3
 	d.V = (ins >> 26) & 0x1
-	d.opc = (ins >> 23) & 0x3
-	d.imm12 = (ins >> 21) & 0xfff
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rt = (ins >> 4) & 0x1f
+	d.opc = (ins >> 22) & 0x3
+	d.imm12 = (ins >> 10) & 0xfff
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rt = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x1) == 0x1 && d.V == 0x1 && (d.opc&0x2) == 0x2:
@@ -11032,8 +11032,8 @@ func decode_ldst_ldst_pos(ins uint32, d *decoded) (err error) {
 func decode_dpreg(ins uint32, d *decoded) (err error) {
 	op0 := (ins >> 30) & 0x1
 	op1 := (ins >> 28) & 0x1
-	op2 := (ins >> 24) & 0xf
-	op3 := (ins >> 15) & 0x3f
+	op2 := (ins >> 21) & 0xf
+	op3 := (ins >> 10) & 0x3f
 
 	switch {
 	case op0 == 0x0 && op1 == 0x1 && op2 == 0x6:
@@ -11070,10 +11070,10 @@ func decode_dpreg_dp_2src(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_dp_2src
 	d.sf = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x1:
@@ -11168,10 +11168,10 @@ func decode_dpreg_dp_1src(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_dp_1src
 	d.sf = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.opcode2 = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opcode2 = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x20) == 0x20:
@@ -11269,13 +11269,13 @@ func decode_dpreg_dp_1src(ins uint32, d *decoded) (err error) {
 func decode_dpreg_log_shift(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_log_shift
 	d.sf = (ins >> 31) & 0x1
-	d.opc = (ins >> 30) & 0x3
-	d.shift = (ins >> 23) & 0x3
+	d.opc = (ins >> 29) & 0x3
+	d.shift = (ins >> 22) & 0x3
 	d.N = (ins >> 21) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.imm6 = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.sf == 0x0 && (d.imm6&0x20) == 0x20:
@@ -11323,11 +11323,11 @@ func decode_dpreg_addsub_shift(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.shift = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.imm6 = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.shift = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.shift == 0x3:
@@ -11361,12 +11361,12 @@ func decode_dpreg_addsub_ext(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.opt = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.option = (ins >> 15) & 0x7
-	d.imm3 = (ins >> 12) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opt = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.option = (ins >> 13) & 0x7
+	d.imm3 = (ins >> 10) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.imm3 & 0x5) == 0x5:
@@ -11404,9 +11404,9 @@ func decode_dpreg_addsub_carry(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.sf == 0x0 && d.op == 0x0 && d.S == 0x0:
@@ -11436,10 +11436,10 @@ func decode_dpreg_rmif(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.imm6 = (ins >> 20) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
+	d.imm6 = (ins >> 15) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
 	d.o2 = (ins >> 4) & 0x1
-	d.mask = (ins >> 3) & 0xf
+	d.mask = (ins >> 0) & 0xf
 
 	switch {
 	case d.sf == 0x0:
@@ -11463,11 +11463,11 @@ func decode_dpreg_setf(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.opcode2 = (ins >> 20) & 0x3f
+	d.opcode2 = (ins >> 15) & 0x3f
 	d.sz = (ins >> 14) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
 	d.o3 = (ins >> 4) & 0x1
-	d.mask = (ins >> 3) & 0xf
+	d.mask = (ins >> 0) & 0xf
 
 	switch {
 	case d.sf == 0x0 && d.op == 0x0 && d.S == 0x0:
@@ -11497,12 +11497,12 @@ func decode_dpreg_condcmp_reg(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.cond = (ins >> 15) & 0xf
+	d.Rm = (ins >> 16) & 0x1f
+	d.cond = (ins >> 12) & 0xf
 	d.o2 = (ins >> 10) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
 	d.o3 = (ins >> 4) & 0x1
-	d.nzcv = (ins >> 3) & 0xf
+	d.nzcv = (ins >> 0) & 0xf
 
 	switch {
 	case d.o3 == 0x1:
@@ -11530,12 +11530,12 @@ func decode_dpreg_condcmp_imm(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.imm5 = (ins >> 20) & 0x1f
-	d.cond = (ins >> 15) & 0xf
+	d.imm5 = (ins >> 16) & 0x1f
+	d.cond = (ins >> 12) & 0xf
 	d.o2 = (ins >> 10) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
 	d.o3 = (ins >> 4) & 0x1
-	d.nzcv = (ins >> 3) & 0xf
+	d.nzcv = (ins >> 0) & 0xf
 
 	switch {
 	case d.o3 == 0x1:
@@ -11563,11 +11563,11 @@ func decode_dpreg_condsel(ins uint32, d *decoded) (err error) {
 	d.sf = (ins >> 31) & 0x1
 	d.op = (ins >> 30) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.cond = (ins >> 15) & 0xf
-	d.op2 = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.cond = (ins >> 12) & 0xf
+	d.op2 = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.op2 & 0x2) == 0x2:
@@ -11599,13 +11599,13 @@ func decode_dpreg_condsel(ins uint32, d *decoded) (err error) {
 func decode_dpreg_dp_3src(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_dp_3src
 	d.sf = (ins >> 31) & 0x1
-	d.op54 = (ins >> 30) & 0x3
-	d.op31 = (ins >> 23) & 0x7
-	d.Rm = (ins >> 20) & 0x1f
+	d.op54 = (ins >> 29) & 0x3
+	d.op31 = (ins >> 21) & 0x7
+	d.Rm = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Ra = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Ra = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op54 == 0x0 && d.op31 == 0x2 && d.o0 == 0x1:
@@ -11661,10 +11661,10 @@ func decode_dpreg_dp_3src(ins uint32, d *decoded) (err error) {
 }
 
 func decode_simddp(ins uint32, d *decoded) (err error) {
-	op0 := (ins >> 31) & 0xf
-	op1 := (ins >> 24) & 0x3
-	op2 := (ins >> 22) & 0xf
-	op3 := (ins >> 18) & 0x1ff
+	op0 := (ins >> 28) & 0xf
+	op1 := (ins >> 23) & 0x3
+	op2 := (ins >> 19) & 0xf
+	op3 := (ins >> 10) & 0x1ff
 
 	switch {
 	case op0 == 0x0 && (op1&0x2) == 0x0 && (op2&0x7) == 0x5 && (op3&0x183) == 0x2:
@@ -11799,10 +11799,10 @@ func decode_simddp(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_cryptoaes(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_cryptoaes
-	d.size = (ins >> 23) & 0x3
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x8) == 0x8:
@@ -11831,11 +11831,11 @@ func decode_simddp_cryptoaes(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_cryptosha3(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_cryptosha3
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 14) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 12) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x7:
@@ -11866,10 +11866,10 @@ func decode_simddp_cryptosha3(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_cryptosha2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_cryptosha2
-	d.size = (ins >> 23) & 0x3
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x4) == 0x4:
@@ -11899,10 +11899,10 @@ func decode_simddp_cryptosha2(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdone(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdone
 	d.op = (ins >> 29) & 0x1
-	d.imm5 = (ins >> 20) & 0x1f
-	d.imm4 = (ins >> 14) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.imm5 = (ins >> 16) & 0x1f
+	d.imm4 = (ins >> 11) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && (d.imm4&0x1) == 0x1:
@@ -11927,10 +11927,10 @@ func decode_simddp_asisdsamefp16(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdsamefp16
 	d.U = (ins >> 29) & 0x1
 	d.a = (ins >> 23) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 13) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 11) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x6:
@@ -11977,9 +11977,9 @@ func decode_simddp_asisdmiscfp16(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdmiscfp16
 	d.U = (ins >> 29) & 0x1
 	d.a = (ins >> 23) & 0x1
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x18) == 0x0:
@@ -12053,11 +12053,11 @@ func decode_simddp_asisdmiscfp16(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdsame2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdsame2
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 14) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 11) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0xe) == 0x2:
@@ -12083,10 +12083,10 @@ func decode_simddp_asisdsame2(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdmisc(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdmisc
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x1e) == 0x0:
@@ -12208,10 +12208,10 @@ func decode_simddp_asisdmisc(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdpair(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdpair
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x18) == 0x0:
@@ -12263,11 +12263,11 @@ func decode_simddp_asisdpair(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisddiff(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisddiff
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 12) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0xc) == 0x0:
@@ -12303,11 +12303,11 @@ func decode_simddp_asisddiff(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdsame(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdsame
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 11) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x0:
@@ -12447,11 +12447,11 @@ func decode_simddp_asisdsame(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdshf(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdshf
 	d.U = (ins >> 29) & 0x1
-	d.immh = (ins >> 22) & 0xf
-	d.immb = (ins >> 18) & 0x7
-	d.opcode = (ins >> 15) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.immh = (ins >> 19) & 0xf
+	d.immb = (ins >> 16) & 0x7
+	d.opcode = (ins >> 11) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.immh != 0x0 && d.opcode == 0x1:
@@ -12545,14 +12545,14 @@ func decode_simddp_asisdshf(ins uint32, d *decoded) (err error) {
 func decode_simddp_asisdelem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asisdelem
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.L = (ins >> 21) & 0x1
 	d.M = (ins >> 20) & 0x1
-	d.Rm = (ins >> 19) & 0xf
-	d.opcode = (ins >> 15) & 0xf
+	d.Rm = (ins >> 16) & 0xf
+	d.opcode = (ins >> 12) & 0xf
 	d.H = (ins >> 11) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x0:
@@ -12632,12 +12632,12 @@ func decode_simddp_asisdelem(ins uint32, d *decoded) (err error) {
 func decode_simddp_asimdtbl(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdtbl
 	d.Q = (ins >> 30) & 0x1
-	d.op2 = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.len = (ins >> 14) & 0x3
+	d.op2 = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.len = (ins >> 13) & 0x3
 	d.op = (ins >> 12) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.op2 & 0x1) == 0x1:
@@ -12669,11 +12669,11 @@ func decode_simddp_asimdtbl(ins uint32, d *decoded) (err error) {
 func decode_simddp_asimdperm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdperm
 	d.Q = (ins >> 30) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 14) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 12) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x0:
@@ -12701,11 +12701,11 @@ func decode_simddp_asimdperm(ins uint32, d *decoded) (err error) {
 func decode_simddp_asimdext(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdext
 	d.Q = (ins >> 30) & 0x1
-	d.op2 = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.imm4 = (ins >> 14) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.op2 = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.imm4 = (ins >> 11) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.op2 & 0x1) == 0x1:
@@ -12724,10 +12724,10 @@ func decode_simddp_asimdins(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdins
 	d.Q = (ins >> 30) & 0x1
 	d.op = (ins >> 29) & 0x1
-	d.imm5 = (ins >> 20) & 0x1f
-	d.imm4 = (ins >> 14) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.imm5 = (ins >> 16) & 0x1f
+	d.imm4 = (ins >> 11) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.imm5 & 0xf) == 0x0:
@@ -12771,10 +12771,10 @@ func decode_simddp_asimdsamefp16(ins uint32, d *decoded) (err error) {
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
 	d.a = (ins >> 23) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 13) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 11) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0 && d.a == 0x0 && d.opcode == 0x0:
@@ -12852,9 +12852,9 @@ func decode_simddp_asimdmiscfp16(ins uint32, d *decoded) (err error) {
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
 	d.a = (ins >> 23) & 0x1
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x18) == 0x0:
@@ -12945,11 +12945,11 @@ func decode_simddp_asimdsame2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdsame2
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 14) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 11) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.size&0x2) == 0x0 && d.opcode == 0x3:
@@ -13018,10 +13018,10 @@ func decode_simddp_asimdmisc(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdmisc
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x1e) == 0x10:
@@ -13198,10 +13198,10 @@ func decode_simddp_asimdall(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdall
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.opcode = (ins >> 16) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.opcode = (ins >> 12) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x1e) == 0x0:
@@ -13274,11 +13274,11 @@ func decode_simddp_asimddiff(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimddiff
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 12) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0xf:
@@ -13353,11 +13353,11 @@ func decode_simddp_asimdsame(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdsame
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.size = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 11) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.U == 0x0 && d.opcode == 0x0:
@@ -13553,14 +13553,14 @@ func decode_simddp_asimdimm(ins uint32, d *decoded) (err error) {
 	d.a = (ins >> 18) & 0x1
 	d.b = (ins >> 17) & 0x1
 	d.c = (ins >> 16) & 0x1
-	d.cmode = (ins >> 15) & 0xf
+	d.cmode = (ins >> 12) & 0xf
 	d.o2 = (ins >> 11) & 0x1
 	d.d = (ins >> 9) & 0x1
 	d.e = (ins >> 8) & 0x1
 	d.f = (ins >> 7) & 0x1
 	d.g = (ins >> 6) & 0x1
 	d.h = (ins >> 5) & 0x1
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.op == 0x0 && (d.cmode&0x8) == 0x0 && d.o2 == 0x1:
@@ -13617,11 +13617,11 @@ func decode_simddp_asimdshf(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdshf
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.immh = (ins >> 22) & 0xf
-	d.immb = (ins >> 18) & 0x7
-	d.opcode = (ins >> 15) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.immh = (ins >> 19) & 0xf
+	d.immb = (ins >> 16) & 0x7
+	d.opcode = (ins >> 11) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x1:
@@ -13720,14 +13720,14 @@ func decode_simddp_asimdelem(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_asimdelem
 	d.Q = (ins >> 30) & 0x1
 	d.U = (ins >> 29) & 0x1
-	d.size = (ins >> 23) & 0x3
+	d.size = (ins >> 22) & 0x3
 	d.L = (ins >> 21) & 0x1
 	d.M = (ins >> 20) & 0x1
-	d.Rm = (ins >> 19) & 0xf
-	d.opcode = (ins >> 15) & 0xf
+	d.Rm = (ins >> 16) & 0xf
+	d.opcode = (ins >> 12) & 0xf
 	d.H = (ins >> 11) & 0x1
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.size == 0x1 && d.opcode == 0x9:
@@ -13850,11 +13850,11 @@ func decode_simddp_asimdelem(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_crypto3_imm2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_crypto3_imm2
-	d.Rm = (ins >> 20) & 0x1f
-	d.imm2 = (ins >> 13) & 0x3
-	d.opcode = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.imm2 = (ins >> 12) & 0x3
+	d.opcode = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x0:
@@ -13873,11 +13873,11 @@ func decode_simddp_crypto3_imm2(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_cryptosha512_3(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_cryptosha512_3
-	d.Rm = (ins >> 20) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
 	d.O = (ins >> 14) & 0x1
-	d.opcode = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opcode = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.O == 0x0 && d.opcode == 0x0:
@@ -13904,11 +13904,11 @@ func decode_simddp_cryptosha512_3(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_crypto4(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_crypto4
-	d.Op0 = (ins >> 22) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.Ra = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Op0 = (ins >> 21) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.Ra = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.Op0 == 0x0:
@@ -13927,19 +13927,19 @@ func decode_simddp_crypto4(ins uint32, d *decoded) (err error) {
 
 func decode_simddp_crypto3_imm6(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_crypto3_imm6
-	d.Rm = (ins >> 20) & 0x1f
-	d.imm6 = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 	d.encoding = encoding_XAR_VVV2_crypto3_imm6
 	return
 }
 
 func decode_simddp_cryptosha512_2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_cryptosha512_2
-	d.opcode = (ins >> 11) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.opcode = (ins >> 10) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.opcode == 0x0:
@@ -13958,12 +13958,12 @@ func decode_simddp_float2fix(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_float2fix
 	d.sf = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.rmode = (ins >> 20) & 0x3
-	d.opcode = (ins >> 18) & 0x7
-	d.scale = (ins >> 15) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.rmode = (ins >> 19) & 0x3
+	d.opcode = (ins >> 16) & 0x7
+	d.scale = (ins >> 10) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x4) == 0x4:
@@ -14040,11 +14040,11 @@ func decode_simddp_float2int(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_float2int
 	d.sf = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.rmode = (ins >> 20) & 0x3
-	d.opcode = (ins >> 18) & 0x7
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.rmode = (ins >> 19) & 0x3
+	d.opcode = (ins >> 16) & 0x7
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.rmode&0x1) == 0x1 && (d.opcode&0x6) == 0x2:
@@ -14259,10 +14259,10 @@ func decode_simddp_floatdp1(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatdp1
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.opcode = (ins >> 20) & 0x3f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.opcode = (ins >> 15) & 0x3f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x20) == 0x20:
@@ -14403,11 +14403,11 @@ func decode_simddp_floatcmp(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatcmp
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.op = (ins >> 15) & 0x3
-	d.Rn = (ins >> 9) & 0x1f
-	d.opcode2 = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.op = (ins >> 14) & 0x3
+	d.Rn = (ins >> 5) & 0x1f
+	d.opcode2 = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode2 & 0x1) == 0x1:
@@ -14460,10 +14460,10 @@ func decode_simddp_floatimm(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatimm
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.imm8 = (ins >> 20) & 0xff
-	d.imm5 = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.imm8 = (ins >> 13) & 0xff
+	d.imm5 = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.imm5 & 0x1) == 0x1:
@@ -14498,12 +14498,12 @@ func decode_simddp_floatccmp(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatccmp
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.cond = (ins >> 15) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.cond = (ins >> 12) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
 	d.op = (ins >> 4) & 0x1
-	d.nzcv = (ins >> 3) & 0xf
+	d.nzcv = (ins >> 0) & 0xf
 
 	switch {
 	case d.ptype == 0x2:
@@ -14534,11 +14534,11 @@ func decode_simddp_floatdp2(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatdp2
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.opcode = (ins >> 15) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.opcode = (ins >> 12) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case (d.opcode & 0x9) == 0x9:
@@ -14617,11 +14617,11 @@ func decode_simddp_floatsel(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatsel
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
-	d.Rm = (ins >> 20) & 0x1f
-	d.cond = (ins >> 15) & 0xf
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.ptype = (ins >> 22) & 0x3
+	d.Rm = (ins >> 16) & 0x1f
+	d.cond = (ins >> 12) & 0xf
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.ptype == 0x2:
@@ -14646,13 +14646,13 @@ func decode_simddp_floatdp3(ins uint32, d *decoded) (err error) {
 	d.iclass = iclass_floatdp3
 	d.M = (ins >> 31) & 0x1
 	d.S = (ins >> 29) & 0x1
-	d.ptype = (ins >> 23) & 0x3
+	d.ptype = (ins >> 22) & 0x3
 	d.o1 = (ins >> 21) & 0x1
-	d.Rm = (ins >> 20) & 0x1f
+	d.Rm = (ins >> 16) & 0x1f
 	d.o0 = (ins >> 15) & 0x1
-	d.Ra = (ins >> 14) & 0x1f
-	d.Rn = (ins >> 9) & 0x1f
-	d.Rd = (ins >> 4) & 0x1f
+	d.Ra = (ins >> 10) & 0x1f
+	d.Rn = (ins >> 5) & 0x1f
+	d.Rd = (ins >> 0) & 0x1f
 
 	switch {
 	case d.ptype == 0x2:

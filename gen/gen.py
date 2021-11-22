@@ -238,7 +238,7 @@ def print_decode_group_body(node, name: str, iclasses: dict[str, Iclass], f=sys.
         for child in node.regdiagram:
             if child.name is None:
                 continue
-            print(f"\t{child.name} := (ins >> {child.hibit}) & {hex(child.mask)}", file=f)
+            print(f"\t{child.name} := (ins >> {child.hibit-child.width+1}) & {hex(child.mask)}", file=f)
         print(file=f)
 
     for i, child in enumerate(node.nodes):
@@ -272,7 +272,7 @@ def print_decode_iclass_body(node: IndexNode, iclass: Iclass, f=sys.stdout):
     for child in iclass.regdiagram:
         if child.name is None:
             continue
-        print(f"\td.{child.name} = (ins >> {child.hibit}) & {hex(child.mask)}", file=f)
+        print(f"\td.{child.name} = (ins >> {child.hibit-child.width+1}) & {hex(child.mask)}", file=f)
 
     table = iclass.instructiontable
     if len(table.encodings) == 0:

@@ -6,25 +6,33 @@ const (
 	InvalidMnemonic Mnemonic = iota
 	ADC
 	ADCS
-	SBC
-	SBCS
+	ADD
+	ADDS
 	NGC
 	NGCS
+	SBC
+	SBCS
+	SUB
+	SUBS
 )
 
 func (m Mnemonic) String() string {
 	if m >= 0 && int(m) < len(mnemonicStrings) {
 		return mnemonicStrings[m]
 	}
-	return "<invalid>"
+	return invalid
 }
 
 var mnemonicStrings = []string{
-	"<invalid>",
+	invalid,
 	"adc",
 	"adcs",
-	"sbc",
-	"sbcs",
+	"add",
+	"adds",
 	"ngc",
 	"ngcs",
+	"sbc",
+	"sbcs",
+	"sub",
+	"subs",
 }

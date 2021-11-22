@@ -5,7 +5,7 @@ type Instruction struct {
 	Operands [MaxOperands]Operand
 }
 
-const MaxOperands = 3
+const MaxOperands = 4
 
 func New(mnemonic Mnemonic) Instruction {
 	return Instruction{Mnemonic: mnemonic}

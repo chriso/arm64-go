@@ -1,6 +1,8 @@
 package arm64
 
-import "errors"
+import (
+	"errors"
+)
 
 var ErrInvalidOperand = errors.New("invalid operand")
 
@@ -11,14 +13,37 @@ func Assemble(i *Instruction) (uint32, error) {
 		if err != nil {
 			return 0, err
 		}
+		if i.Operands[3] != nil || !rn.Type().GP() {
+			return 0, ErrInvalidOperand
+		}
 		sf := flag(rd.Type() == X)
 		op := flag(m == SBC || m == SBCS)
 		s := flag(m == ADCS || m == SBCS)
 		return encode_addsub_carry(sf, op, s, rm.Index(), rn.Index(), rd.Index())
+	case ADD, ADDS, SUB, SUBS:
+		rd, rn, rm, err := unpackreg3(i)
+		if err != nil {
+			return 0, err
+		}
+		e, ok := i.Operands[2].(ExtShiftRegister)
+		if !ok || i.Operands[3] != nil || !rn.Type().GP() || e.Amount > 4 {
+			return 0, ErrInvalidOperand
+		}
+		option := e.ExtShift
+		if option == LSL {
+			option = UXTW
+		}
+		sf := flag(rd.Type() == X)
+		op := flag(m == SUB || m == SUBS)
+		s := flag(m == ADDS || m == SUBS)
+		return encode_addsub_ext(sf, op, s, 0, rm.Index(), uint32(option), uint32(e.Amount), rn.Index(), rd.Index())
 	case NGC, NGCS:
 		rn, rm, err := unpackreg2(i)
 		if err != nil {
 			return 0, err
+		}
+		if i.Operands[2] != nil || !rn.Type().GP() {
+			return 0, ErrInvalidOperand
 		}
 		sf := flag(rn.Type() == X)
 		s := flag(m == NGCS)
@@ -36,14 +61,14 @@ func flag(b bool) uint32 {
 }
 
 func unpackreg(op Operand) (Register, error) {
-	if op == nil {
+	switch r := op.(type) {
+	case Register:
+		return r, nil
+	case ExtShiftRegister:
+		return r.Register, nil
+	default:
 		return 0, ErrInvalidOperand
 	}
-	r, ok := op.(Register)
-	if !ok {
-		return 0, ErrInvalidOperand
-	}
-	return r, nil
 }
 
 func unpackreg2(i *Instruction) (a, b Register, err error) {

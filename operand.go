@@ -159,7 +159,7 @@ func (r Register) ExtShift(e ExtShift, amount uint8) ExtShiftRegister {
 }
 
 type ExtShiftRegister struct {
-	Register Register
+	Register
 	ExtShift ExtShift
 	Amount   uint8
 }
@@ -220,4 +220,32 @@ func (e ExtShift) String() string {
 	default:
 		return invalid
 	}
+}
+
+type Immediate int64
+
+func (i Immediate) operand() {}
+
+func (i Immediate) ExtShift(e ExtShift, amount uint8) ExtShiftImmediate {
+	return ExtShiftImmediate{i, e, amount}
+}
+
+func (i Immediate) String() string {
+	return fmt.Sprintf("#%#x", int64(i))
+}
+
+type ExtShiftImmediate struct {
+	Immediate
+	ExtShift ExtShift
+	Amount   uint8
+}
+
+func (e ExtShiftImmediate) operand() {}
+
+func (e ExtShiftImmediate) String() string {
+	str := e.Immediate.String() + ", " + e.ExtShift.String()
+	if e.Amount > 0 {
+		str += fmt.Sprintf(" #%#x", e.Amount)
+	}
+	return str
 }

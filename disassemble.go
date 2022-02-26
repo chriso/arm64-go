@@ -8,6 +8,7 @@ import (
 var ErrNotImplemented = errors.New("not implemented")
 var ErrUndefined = errors.New("undefined")
 
+// Disassemble disassembles a raw 32-bit instruction.
 func Disassemble(ins uint32) (Instruction, error) {
 	var d decoded
 	if err := decode(ins, &d); err != nil {
@@ -16,17 +17,16 @@ func Disassemble(ins uint32) (Instruction, error) {
 
 	switch d.iclass {
 	case iclass_addsub_carry:
-		r := flagr(d.sf, W, X)
+		r := chooseRegister(d.sf, X, W)
 		if d.Rd == 31 && d.op == 1 {
-			m := flagm(d.S, NGC, NGCS)
-			return New(m).WithOperands(r.At(d.Rn), r.At(d.Rm)), nil
+			m := chooseMnemonic(d.S, NGCS, NGC)
+			return New(m, r.At(d.Rn), r.At(d.Rm)), nil
 		} else {
-			m := flagm(d.op, flagm(d.S, ADC, ADCS), flagm(d.S, SBC, SBCS))
-			return New(m).WithOperands(r.At(d.Rd), r.At(d.Rn), r.At(d.Rm)), nil
+			m := chooseMnemonic(d.op, chooseMnemonic(d.S, SBCS, SBC), chooseMnemonic(d.S, ADCS, ADC))
+			return New(m, r.At(d.Rd), r.At(d.Rn), r.At(d.Rm)), nil
 		}
 	case iclass_addsub_ext:
-		r := flagr(d.sf, W, X)
-		m := flagm(d.op, flagm(d.S, ADD, ADDS), flagm(d.S, SUB, SUBS))
+		r := chooseRegister(d.sf, X, W)
 		e := ExtShift(d.option)
 		amount := uint8(d.imm3)
 		if amount > 4 {
@@ -35,20 +35,41 @@ func Disassemble(ins uint32) (Instruction, error) {
 		if (d.Rd == 31 || d.Rn == 31) && e == UXTW && amount != 0 {
 			e = LSL
 		}
-		return New(m).WithOperands(r.At(d.Rd).SP(), r.At(d.Rn).SP(), r.At(d.Rm).ExtShift(e, amount)), nil
+		if d.S == 1 && d.Rd == 31 {
+			m := chooseMnemonic(d.op, CMP, CMN)
+			return New(m, r.At(d.Rn).SP(), r.At(d.Rm).ExtShift(e, amount)), nil
+		}
+		m := chooseMnemonic(d.op, chooseMnemonic(d.S, SUBS, SUB), chooseMnemonic(d.S, ADDS, ADD))
+		return New(m, r.At(d.Rd).SP(), r.At(d.Rn).SP(), r.At(d.Rm).ExtShift(e, amount)), nil
+	case iclass_addsub_imm:
+		r := chooseRegister(d.sf, X, W)
+		var op Operand
+		if d.sh == 1 {
+			op = Immediate(d.imm12).ExtShift(LSL, 12)
+		} else if d.imm12 == 0 && (d.Rd == 31 || d.Rn == 31) {
+			return New(MOV, r.At(d.Rd).SP(), r.At(d.Rn).SP()), nil
+		} else {
+			op = Immediate(d.imm12)
+		}
+		if d.S == 1 && d.Rd == 31 {
+			m := chooseMnemonic(d.op, CMP, CMN)
+			return New(m, r.At(d.Rn).SP(), op), nil
+		}
+		m := chooseMnemonic(d.op, chooseMnemonic(d.S, SUBS, SUB), chooseMnemonic(d.S, ADDS, ADD))
+		return New(m, r.At(d.Rd).SP(), r.At(d.Rn).SP(), op), nil
 	default:
 		return Instruction{}, fmt.Errorf("failed to diassemble %#08x: %w", ins, ErrNotImplemented)
 	}
 }
 
-func flagr(flag uint32, off, on RegisterType) RegisterType {
+func chooseRegister(flag uint32, on, off RegisterType) RegisterType {
 	if flag == 1 {
 		return on
 	}
 	return off
 }
 
-func flagm(flag uint32, off, on Mnemonic) Mnemonic {
+func chooseMnemonic(flag uint32, on, off Mnemonic) Mnemonic {
 	if flag == 1 {
 		return on
 	}

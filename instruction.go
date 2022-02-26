@@ -7,18 +7,15 @@ type Instruction struct {
 
 const MaxOperands = 4
 
-func New(mnemonic Mnemonic) Instruction {
-	return Instruction{Mnemonic: mnemonic}
-}
-
-func (i Instruction) WithOperands(operands ...Operand) Instruction {
+func New(mnemonic Mnemonic, operands ...Operand) (ins Instruction) {
+	ins.Mnemonic = mnemonic
 	for n, operand := range operands {
 		if n >= MaxOperands {
 			panic("exceeded max operands")
 		}
-		i.Operands[n] = operand
+		ins.Operands[n] = operand
 	}
-	return i
+	return
 }
 
 func (i Instruction) String() string {

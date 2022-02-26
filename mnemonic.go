@@ -8,6 +8,9 @@ const (
 	ADCS
 	ADD
 	ADDS
+	CMN
+	CMP
+	MOV
 	NGC
 	NGCS
 	SBC
@@ -29,6 +32,9 @@ var mnemonicStrings = []string{
 	"adcs",
 	"add",
 	"adds",
+	"cmn",
+	"cmp",
+	"mov",
 	"ngc",
 	"ngcs",
 	"sbc",

@@ -892,6 +892,24 @@ func encode_sve_int_arith_vl(op, Rn, imm6, Rd uint32) (ins uint32, err error) {
 	return
 }
 
+func encode_sve_int_arith_svl(op, Rn, imm6, Rd uint32) (ins uint32, err error) {
+	switch {
+	case op > 0x1 || Rn > 0x1f || imm6 > 0x3f || Rd > 0x1f:
+		err = errOverflow
+	case op == 0x0:
+		// encoding_addsvl_r_ri_
+	case op == 0x1:
+		// encoding_addspl_r_ri_
+	default:
+		err = errUnmatched
+	}
+
+	ins |= (op << 22) | (Rn << 16) | (imm6 << 5) | Rd
+	ins |= 0x4205800
+
+	return
+}
+
 func encode_sve_int_read_vl_a(op, opc2, imm6, Rd uint32) (ins uint32, err error) {
 	switch {
 	case op > 0x1 || opc2 > 0x1f || imm6 > 0x3f || Rd > 0x1f:
@@ -916,6 +934,34 @@ func encode_sve_int_read_vl_a(op, opc2, imm6, Rd uint32) (ins uint32, err error)
 
 	ins |= (op << 22) | (opc2 << 16) | (imm6 << 5) | Rd
 	ins |= 0x4a05000
+
+	return
+}
+
+func encode_sve_int_read_svl_a(op, opc2, imm6, Rd uint32) (ins uint32, err error) {
+	switch {
+	case op > 0x1 || opc2 > 0x1f || imm6 > 0x3f || Rd > 0x1f:
+		err = errOverflow
+	case op == 0x0 && (opc2&0x10) == 0x0:
+		err = errUnallocated
+	case op == 0x0 && (opc2&0x18) == 0x10:
+		err = errUnallocated
+	case op == 0x0 && (opc2&0x1c) == 0x18:
+		err = errUnallocated
+	case op == 0x0 && (opc2&0x1e) == 0x1c:
+		err = errUnallocated
+	case op == 0x0 && opc2 == 0x1e:
+		err = errUnallocated
+	case op == 0x0 && opc2 == 0x1f:
+		// encoding_rdsvl_r_i_
+	case op == 0x1:
+		err = errUnallocated
+	default:
+		err = errUnmatched
+	}
+
+	ins |= (op << 22) | (opc2 << 16) | (imm6 << 5) | Rd
+	ins |= 0x4a05800
 
 	return
 }
@@ -6514,9 +6560,17 @@ func encode_branch_reg(opc, op2, op3, Rn, op4 uint32) (ins uint32, err error) {
 		err = errUnallocated
 	case opc == 0x2 && op2 == 0x1f && op3 == 0x2 && Rn != 0x1f && op4 != 0x1f:
 		err = errUnallocated
+	case opc == 0x2 && op2 == 0x1f && op3 == 0x2 && Rn != 0x1f && op4 == 0x1f:
+		err = errUnallocated
+	case opc == 0x2 && op2 == 0x1f && op3 == 0x2 && Rn == 0x1f && op4 != 0x1f:
+		err = errUnallocated
 	case opc == 0x2 && op2 == 0x1f && op3 == 0x2 && Rn == 0x1f && op4 == 0x1f:
 		// encoding_RETAA_64E_branch_reg
 	case opc == 0x2 && op2 == 0x1f && op3 == 0x3 && Rn != 0x1f && op4 != 0x1f:
+		err = errUnallocated
+	case opc == 0x2 && op2 == 0x1f && op3 == 0x3 && Rn != 0x1f && op4 == 0x1f:
+		err = errUnallocated
+	case opc == 0x2 && op2 == 0x1f && op3 == 0x3 && Rn == 0x1f && op4 != 0x1f:
 		err = errUnallocated
 	case opc == 0x2 && op2 == 0x1f && op3 == 0x3 && Rn == 0x1f && op4 == 0x1f:
 		// encoding_RETAB_64E_branch_reg

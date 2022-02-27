@@ -79,8 +79,10 @@ const (
 	iclass_sve_int_index_rr // SVE index generation (register start, register increment)
 
 	// sve > sve_alloca
-	iclass_sve_int_arith_vl  // SVE stack frame adjustment
-	iclass_sve_int_read_vl_a // SVE stack frame size
+	iclass_sve_int_arith_vl   // SVE stack frame adjustment
+	iclass_sve_int_arith_svl  // sve_int_arith_svl
+	iclass_sve_int_read_vl_a  // SVE stack frame size
+	iclass_sve_int_read_svl_a // sve_int_read_svl_a
 
 	// sve > sve_int_unpred_arit_b
 	iclass_sve_int_mul_b   // SVE2 integer multiply vectors (unpredicated)
@@ -738,8 +740,15 @@ const (
 	encoding_addvl_r_ri_ // ADDVL
 	encoding_addpl_r_ri_ // ADDPL
 
+	// iclass_sve_int_arith_svl
+	encoding_addsvl_r_ri_ // ADDSVL
+	encoding_addspl_r_ri_ // ADDSPL
+
 	// iclass_sve_int_read_vl_a
 	encoding_rdvl_r_i_ // RDVL
+
+	// iclass_sve_int_read_svl_a
+	encoding_rdsvl_r_i_ // RDSVL
 
 	// iclass_sve_int_mul_b
 	encoding_mul_z_zz_   // MUL (vectors, unpredicated)

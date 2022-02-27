@@ -1652,10 +1652,12 @@ func decode_sve_sve_alloca(ins uint32, d *decoded) (err error) {
 	switch {
 	case op0 == 0x0 && op1 == 0x0:
 		err = decode_sve_sve_alloca_sve_int_arith_vl(ins, d)
+	case op0 == 0x0 && op1 == 0x1:
+		err = decode_sve_sve_alloca_sve_int_arith_svl(ins, d)
 	case op0 == 0x1 && op1 == 0x0:
 		err = decode_sve_sve_alloca_sve_int_read_vl_a(ins, d)
-	case op1 == 0x1:
-		err = errUnallocated
+	case op0 == 0x1 && op1 == 0x1:
+		err = decode_sve_sve_alloca_sve_int_read_svl_a(ins, d)
 	default:
 		err = errUnmatched
 	}
@@ -1674,6 +1676,24 @@ func decode_sve_sve_alloca_sve_int_arith_vl(ins uint32, d *decoded) (err error) 
 		d.encoding = encoding_addvl_r_ri_
 	case d.op == 0x1:
 		d.encoding = encoding_addpl_r_ri_
+	default:
+		err = errUnmatched
+	}
+	return
+}
+
+func decode_sve_sve_alloca_sve_int_arith_svl(ins uint32, d *decoded) (err error) {
+	d.iclass = iclass_sve_int_arith_svl
+	d.op = (ins >> 22) & 0x1
+	d.Rn = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 5) & 0x3f
+	d.Rd = (ins >> 0) & 0x1f
+
+	switch {
+	case d.op == 0x0:
+		d.encoding = encoding_addsvl_r_ri_
+	case d.op == 0x1:
+		d.encoding = encoding_addspl_r_ri_
 	default:
 		err = errUnmatched
 	}
@@ -1700,6 +1720,34 @@ func decode_sve_sve_alloca_sve_int_read_vl_a(ins uint32, d *decoded) (err error)
 		err = errUnallocated
 	case d.op == 0x0 && d.opc2 == 0x1f:
 		d.encoding = encoding_rdvl_r_i_
+	case d.op == 0x1:
+		err = errUnallocated
+	default:
+		err = errUnmatched
+	}
+	return
+}
+
+func decode_sve_sve_alloca_sve_int_read_svl_a(ins uint32, d *decoded) (err error) {
+	d.iclass = iclass_sve_int_read_svl_a
+	d.op = (ins >> 22) & 0x1
+	d.opc2 = (ins >> 16) & 0x1f
+	d.imm6 = (ins >> 5) & 0x3f
+	d.Rd = (ins >> 0) & 0x1f
+
+	switch {
+	case d.op == 0x0 && (d.opc2&0x10) == 0x0:
+		err = errUnallocated
+	case d.op == 0x0 && (d.opc2&0x18) == 0x10:
+		err = errUnallocated
+	case d.op == 0x0 && (d.opc2&0x1c) == 0x18:
+		err = errUnallocated
+	case d.op == 0x0 && (d.opc2&0x1e) == 0x1c:
+		err = errUnallocated
+	case d.op == 0x0 && d.opc2 == 0x1e:
+		err = errUnallocated
+	case d.op == 0x0 && d.opc2 == 0x1f:
+		d.encoding = encoding_rdsvl_r_i_
 	case d.op == 0x1:
 		err = errUnallocated
 	default:
@@ -8639,9 +8687,17 @@ func decode_control_branch_reg(ins uint32, d *decoded) (err error) {
 		err = errUnallocated
 	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x2 && d.Rn != 0x1f && d.op4 != 0x1f:
 		err = errUnallocated
+	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x2 && d.Rn != 0x1f && d.op4 == 0x1f:
+		err = errUnallocated
+	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x2 && d.Rn == 0x1f && d.op4 != 0x1f:
+		err = errUnallocated
 	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x2 && d.Rn == 0x1f && d.op4 == 0x1f:
 		d.encoding = encoding_RETAA_64E_branch_reg
 	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x3 && d.Rn != 0x1f && d.op4 != 0x1f:
+		err = errUnallocated
+	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x3 && d.Rn != 0x1f && d.op4 == 0x1f:
+		err = errUnallocated
+	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x3 && d.Rn == 0x1f && d.op4 != 0x1f:
 		err = errUnallocated
 	case d.opc == 0x2 && d.op2 == 0x1f && d.op3 == 0x3 && d.Rn == 0x1f && d.op4 == 0x1f:
 		d.encoding = encoding_RETAB_64E_branch_reg
